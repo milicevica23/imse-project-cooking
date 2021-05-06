@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    <style>
+        .randomclass{
+            background-color: blue;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="ourapp">
+        {{ username}} , {{ password}}
+        <button @click="changePassword"> here you change </button>
+        <ul>
+            <li v-for="(user,index) in users" :key="index">
+              {{ user.username }} - {{ user.password}}
+            </li>
+        </ul>
+    </div>
+    <div class="randomclass">dsadsa</div>
+    <script src="app.js"></script>
+</body>
+</html>

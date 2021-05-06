@@ -1,8 +1,6 @@
 package com.example.firstdockerproject;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.net.URI;
@@ -14,13 +12,14 @@ import java.net.http.HttpResponse;
 @RequestMapping("/test")
 public class Controller {
 
-    @GetMapping()
-    public String test() throws IOException, InterruptedException {
+    @GetMapping("/id_url")
+    public String test(@RequestParam String id_url) throws IOException, InterruptedException {
+        String url = "http://" + id_url +":5000/helloworld";
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
                 .header("accept", "application/json")
-                .uri(URI.create("http://python:5000/helloworld"))
+                .uri(URI.create(url))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         return response.body();

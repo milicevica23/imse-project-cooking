@@ -1,0 +1,15 @@
+version: "3"
+services: 
+  java:
+    build: ./first-docker-project
+    #image: 154817/javatest
+    ports: 
+      - 8080:8080
+    #volumes: 
+     # - first-docker-project:/app
+  python:
+    image: 154817/pythontest
+    expose:
+      - 5000
+#volumes:
+ # first-docker-project:

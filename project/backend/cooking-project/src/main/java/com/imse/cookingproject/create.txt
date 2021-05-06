@@ -1,0 +1,45 @@
+
+CREATE TABLE myschema.accounts1 (
+  user_id serial PRIMARY KEY,
+  username VARCHAR ( 50 ) UNIQUE NOT NULL,
+  password VARCHAR ( 50 ) NOT NULL,
+  email VARCHAR ( 255 ) UNIQUE NOT NULL
+);
+
+CREATE TABLE myschema.author(
+    author_id integer PRIMARY KEY,
+    name varchar (50),
+    category varchar (255)
+);
+
+select * from myschema.author;
+insert into myschema.author values (123, 'aleks', 'breakfast');
+
+CREATE TABLE myschema.recipe(
+    recipe_id integer PRIMARY KEY,
+    date date,
+    preparation_time integer,
+    cooking_time integer,
+    course varchar (255) NOT NULL,
+    cuisine varchar (255),
+    ingredients varchar (255) NOT NULL,
+    instructions varchar (255) NOT NULL
+);
+
+CREATE TABLE myschema.user(
+    user_id integer PRIMARY KEY,
+    username varchar (50) NOT NULL,
+    password varchar (50)NOT NULL,
+    name varchar (255) NOT NULL,
+    date_of_birth date NOT NULL,
+    email varchar (255) NOT NULL
+);
+
+CREATE TABLE myschema.Rating(
+    rating integer NOT NULL
+);
+
+
+
+insert into myschema.accounts1 values (1,'aleks','12312','email');
+select * from myschema.accounts1
