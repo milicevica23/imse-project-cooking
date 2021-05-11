@@ -1,0 +1,354 @@
+{
+    "users": [
+        {
+            "userId": 0,
+            "username": "Julia0",
+            "password": "0789",
+            "name": "Julia",
+            "email": "Julia@hotmail.com"
+        },
+        {
+            "userId": 1,
+            "username": "Luca1",
+            "password": "13434",
+            "name": "Luca",
+            "email": "Luca@gmail.com"
+        },
+        {
+            "userId": 2,
+            "username": "Dejan2",
+            "password": "0789",
+            "name": "Dejan",
+            "email": "Dejan@hotmail.com"
+        },
+        {
+            "userId": 3,
+            "username": "Burcu3",
+            "password": "13434",
+            "name": "Burcu",
+            "email": "Burcu@gmail.com"
+        },
+        {
+            "userId": 4,
+            "username": "Burcu4",
+            "password": "123434",
+            "name": "Burcu",
+            "email": "Burcu@gmail.com"
+        },
+        {
+            "userId": 5,
+            "username": "Dejan5",
+            "password": "23483",
+            "name": "Dejan",
+            "email": "Dejan@hotmail.com"
+        },
+        {
+            "userId": 6,
+            "username": "Aleks6",
+            "password": "23483",
+            "name": "Aleks",
+            "email": "Aleks@outlook.com"
+        },
+        {
+            "userId": 7,
+            "username": "Aleks7",
+            "password": "210923",
+            "name": "Aleks",
+            "email": "Aleks@outlook.com"
+        },
+        {
+            "userId": 8,
+            "username": "Julia8",
+            "password": "123434",
+            "name": "Julia",
+            "email": "Julia@hotmail.com"
+        },
+        {
+            "userId": 9,
+            "username": "Burcu9",
+            "password": "13434",
+            "name": "Burcu",
+            "email": "Burcu@hotmail.com"
+        },
+        {
+            "userId": 10,
+            "username": "Luca10",
+            "password": "23483",
+            "name": "Luca",
+            "email": "Luca@outlook.com"
+        },
+        {
+            "userId": 11,
+            "username": "Dejan11",
+            "password": "23483",
+            "name": "Dejan",
+            "email": "Dejan@hotmail.com"
+        },
+        {
+            "userId": 12,
+            "username": "Luca12",
+            "password": "13434",
+            "name": "Luca",
+            "email": "Luca@outlook.com"
+        },
+        {
+            "userId": 13,
+            "username": "Burcu13",
+            "password": "23483",
+            "name": "Burcu",
+            "email": "Burcu@gmail.com"
+        },
+        {
+            "userId": 14,
+            "username": "Martin14",
+            "password": "23483",
+            "name": "Martin",
+            "email": "Martin@gmail.com"
+        },
+        {
+            "userId": 15,
+            "username": "Burcu15",
+            "password": "123434",
+            "name": "Burcu",
+            "email": "Burcu@gmail.com"
+        },
+        {
+            "userId": 16,
+            "username": "Julia16",
+            "password": "23483",
+            "name": "Julia",
+            "email": "Julia@hotmail.com"
+        },
+        {
+            "userId": 17,
+            "username": "Julia17",
+            "password": "23483",
+            "name": "Julia",
+            "email": "Julia@gmail.com"
+        },
+        {
+            "userId": 18,
+            "username": "Martin18",
+            "password": "13434",
+            "name": "Martin",
+            "email": "Martin@outlook.com"
+        },
+        {
+            "userId": 19,
+            "username": "Aleks19",
+            "password": "210923",
+            "name": "Aleks",
+            "email": "Aleks@outlook.com"
+        },
+        {
+            "userId": 20,
+            "username": "Dejan20",
+            "password": "13434",
+            "name": "Dejan",
+            "email": "Dejan@hotmail.com"
+        },
+        {
+            "userId": 21,
+            "username": "Aleks21",
+            "password": "13434",
+            "name": "Aleks",
+            "email": "Aleks@gmail.com"
+        },
+        {
+            "userId": 22,
+            "username": "Aleks22",
+            "password": "210923",
+            "name": "Aleks",
+            "email": "Aleks@hotmail.com"
+        },
+        {
+            "userId": 23,
+            "username": "Julia23",
+            "password": "0789",
+            "name": "Julia",
+            "email": "Julia@hotmail.com"
+        },
+        {
+            "userId": 24,
+            "username": "Dejan24",
+            "password": "0789",
+            "name": "Dejan",
+            "email": "Dejan@gmail.com"
+        },
+        {
+            "userId": 25,
+            "username": "Martin25",
+            "password": "0789",
+            "name": "Martin",
+            "email": "Martin@outlook.com"
+        },
+        {
+            "userId": 26,
+            "username": "Aleks26",
+            "password": "210923",
+            "name": "Aleks",
+            "email": "Aleks@gmail.com"
+        },
+        {
+            "userId": 27,
+            "username": "Dejan27",
+            "password": "13434",
+            "name": "Dejan",
+            "email": "Dejan@outlook.com"
+        },
+        {
+            "userId": 28,
+            "username": "Burcu28",
+            "password": "210923",
+            "name": "Burcu",
+            "email": "Burcu@outlook.com"
+        },
+        {
+            "userId": 29,
+            "username": "Julia29",
+            "password": "0789",
+            "name": "Julia",
+            "email": "Julia@hotmail.com"
+        },
+        {
+            "userId": 30,
+            "username": "Julia30",
+            "password": "0789",
+            "name": "Julia",
+            "email": "Julia@outlook.com"
+        },
+        {
+            "userId": 31,
+            "username": "Aleks31",
+            "password": "0789",
+            "name": "Aleks",
+            "email": "Aleks@outlook.com"
+        },
+        {
+            "userId": 32,
+            "username": "Luca32",
+            "password": "0789",
+            "name": "Luca",
+            "email": "Luca@gmail.com"
+        },
+        {
+            "userId": 33,
+            "username": "Burcu33",
+            "password": "0789",
+            "name": "Burcu",
+            "email": "Burcu@gmail.com"
+        },
+        {
+            "userId": 34,
+            "username": "Aleks34",
+            "password": "23483",
+            "name": "Aleks",
+            "email": "Aleks@outlook.com"
+        },
+        {
+            "userId": 35,
+            "username": "Aleks35",
+            "password": "123434",
+            "name": "Aleks",
+            "email": "Aleks@hotmail.com"
+        },
+        {
+            "userId": 36,
+            "username": "Julia36",
+            "password": "23483",
+            "name": "Julia",
+            "email": "Julia@hotmail.com"
+        },
+        {
+            "userId": 37,
+            "username": "Luca37",
+            "password": "13434",
+            "name": "Luca",
+            "email": "Luca@gmail.com"
+        },
+        {
+            "userId": 38,
+            "username": "Dejan38",
+            "password": "13434",
+            "name": "Dejan",
+            "email": "Dejan@hotmail.com"
+        },
+        {
+            "userId": 39,
+            "username": "Luca39",
+            "password": "23483",
+            "name": "Luca",
+            "email": "Luca@hotmail.com"
+        },
+        {
+            "userId": 40,
+            "username": "Aleks40",
+            "password": "210923",
+            "name": "Aleks",
+            "email": "Aleks@gmail.com"
+        },
+        {
+            "userId": 41,
+            "username": "Burcu41",
+            "password": "123434",
+            "name": "Burcu",
+            "email": "Burcu@outlook.com"
+        },
+        {
+            "userId": 42,
+            "username": "Luca42",
+            "password": "123434",
+            "name": "Luca",
+            "email": "Luca@gmail.com"
+        },
+        {
+            "userId": 43,
+            "username": "Julia43",
+            "password": "23483",
+            "name": "Julia",
+            "email": "Julia@outlook.com"
+        },
+        {
+            "userId": 44,
+            "username": "Burcu44",
+            "password": "123434",
+            "name": "Burcu",
+            "email": "Burcu@gmail.com"
+        },
+        {
+            "userId": 45,
+            "username": "Martin45",
+            "password": "123434",
+            "name": "Martin",
+            "email": "Martin@gmail.com"
+        },
+        {
+            "userId": 46,
+            "username": "Aleks46",
+            "password": "123434",
+            "name": "Aleks",
+            "email": "Aleks@outlook.com"
+        },
+        {
+            "userId": 47,
+            "username": "Aleks47",
+            "password": "23483",
+            "name": "Aleks",
+            "email": "Aleks@gmail.com"
+        },
+        {
+            "userId": 48,
+            "username": "Luca48",
+            "password": "210923",
+            "name": "Luca",
+            "email": "Luca@gmail.com"
+        },
+        {
+            "userId": 49,
+            "username": "Burcu49",
+            "password": "13434",
+            "name": "Burcu",
+            "email": "Burcu@hotmail.com"
+        }
+    ]
+}

@@ -1,5 +1,6 @@
 package com.imse.cookingproject.model;
 
+import com.imse.cookingproject.CookingSiteProperties;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +37,7 @@ public class Instruction implements Dto<Instruction> {
     public void dropTable() {
         String DROP_INSTRUCTION_IF_EXISTS_QUERY = "DROP TABLE IF EXISTS instruction";
         DatabaseSession.executeUpdate(DROP_INSTRUCTION_IF_EXISTS_QUERY);
+        log.info("drop tables Instruction");
     }
 
     @Override
@@ -67,16 +69,16 @@ public class Instruction implements Dto<Instruction> {
     }
 
     public static void generateData() {
-       /* DatabaseSession.executeUpdate("INSERT INTO instruction(instruction_id, step_number, content) VALUES(0, 1, 'cut the onions')");
-        DatabaseSession.executeUpdate("INSERT INTO instruction(instruction_id, step_number, content) VALUES(1, 2, 'prepare paprika')"); */
-
         String[] content = new String[]{"wash the vegetables", "cut the onions", "boil water", "mash bananas", "put vegetables in the pan"};
         String[] number = new String[] {"1", "2", "3", "4", "5"};
 
-        for(int i = 0; i<50; ++i) {
-            String RANDOM_INGREDIENT_QUERY = "INSERT INTO instruction(instruction_id, step_number, content, recipe_id) VALUES(" + i + ", 'Step #" +
+        for(int i = 0; i<CookingSiteProperties.getInstructionAmount(); ++i) {
+            String RANDOM_INGREDIENT_QUERY = "INSERT INTO instruction(instruction_id, step_number, content, recipe_id) " +
+                    "VALUES(" + i + ", 'Step #" +
                     number[ThreadLocalRandom.current().nextInt(0, number.length)] + "', '" +
-                    content[ThreadLocalRandom.current().nextInt(0, content.length)]+ "', " + i + ")" ;
+                    content[ThreadLocalRandom.current().nextInt(0, content.length)]+ "', " +
+                    ThreadLocalRandom.current().nextInt(0, CookingSiteProperties.getRecipeAmount()) + ")" ;
+
             DatabaseSession.executeUpdate(RANDOM_INGREDIENT_QUERY);
         }
     }

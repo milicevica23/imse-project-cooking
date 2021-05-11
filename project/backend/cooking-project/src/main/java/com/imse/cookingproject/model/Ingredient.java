@@ -1,7 +1,9 @@
 package com.imse.cookingproject.model;
 
+import com.imse.cookingproject.CookingSiteProperties;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,6 +12,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Data
+@Slf4j
 @RequiredArgsConstructor
 public class Ingredient implements Dto<Ingredient>{
     private Integer ingredientId;
@@ -33,6 +36,7 @@ public class Ingredient implements Dto<Ingredient>{
     public void dropTable() {
         String DROP_INGREDIENT_IF_EXISTS_QUERY = "DROP TABLE IF EXISTS ingredient";
         DatabaseSession.executeUpdate(DROP_INGREDIENT_IF_EXISTS_QUERY);
+        log.info("drop tables Ingredient");
     }
 
     @Override
@@ -65,17 +69,15 @@ public class Ingredient implements Dto<Ingredient>{
     }
 
     public static void generateData() {
-        /*DatabaseSession.executeUpdate("INSERT INTO ingredient(ingredient_id, ingredient_name, type) VALUES(0, 'carrot', 'veg')");
-        DatabaseSession.executeUpdate("INSERT INTO ingredient(ingredient_id, ingredient_name, type) VALUES(1, 'banana', 'fruit')");
-        DatabaseSession.executeUpdate("INSERT INTO ingredient(ingredient_id, ingredient_name, type) VALUES(2, 'milk', 'dairy')");*/
-
         String[] ingredientName = new String[]{"milk", "carrot", "salami", "banana", "sugar", "pasta"};
         String[] type = new String[]{"dairy", "vegetable", "fruit", "meat", "fat"};
 
-        for(int i = 0; i<50; ++i) {
-            String RANDOM_INGREDIENT_QUERY = "INSERT INTO ingredient(ingredient_id, ingredient_name, type, recipe_id) VALUES(" + i + ", '" +
+        for(int i = 0; i<CookingSiteProperties.getIngredientAmount(); ++i) {
+            String RANDOM_INGREDIENT_QUERY = "INSERT INTO ingredient(ingredient_id, ingredient_name, type, recipe_id) " +
+                    "VALUES(" + i + ", '" +
                     ingredientName[ThreadLocalRandom.current().nextInt(0, ingredientName.length)] + "', '" +
-                    type[ThreadLocalRandom.current().nextInt(0, type.length)]+ "', " + i + ")" ;
+                    type[ThreadLocalRandom.current().nextInt(0, type.length)]+ "', " +
+                    ThreadLocalRandom.current().nextInt(0, CookingSiteProperties.getRecipeAmount()) + ")" ;
             DatabaseSession.executeUpdate(RANDOM_INGREDIENT_QUERY);
         }
     }

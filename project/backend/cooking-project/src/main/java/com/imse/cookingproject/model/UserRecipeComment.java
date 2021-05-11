@@ -1,5 +1,6 @@
 package com.imse.cookingproject.model;
 
+import com.imse.cookingproject.CookingSiteProperties;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +39,7 @@ public class UserRecipeComment implements Dto<UserRecipeComment>{
 
     @Override
     public void dropTable() {
+        log.info("drop tables UserRecipeComment");
         String DROP_IF_EXISTS_QUERY = "DROP TABLE IF EXISTS user_recipe_comment";
         DatabaseSession.executeUpdate(DROP_IF_EXISTS_QUERY);
     }
@@ -74,8 +76,11 @@ public class UserRecipeComment implements Dto<UserRecipeComment>{
         String[] date = new String[] {"12-3-21", "15-10-20", "18-10-20", "4-4-21", "24-1-21", "12-5-21"};
         String[] content = new String[]{"best recipe", "liked this", "too salty", "could be more sweet"};
 
-        for(int i = 0; i<50; ++i) {
-            String RANDOM_QUERY = "INSERT INTO user_recipe_comment(comment_id, user_id, recipe_id, date, content) VALUES(" + i + ", " + i + ", " + i + ", '" +
+        for(int i = 0; i<CookingSiteProperties.getCommentAmount(); ++i) {
+            String RANDOM_QUERY = "INSERT INTO user_recipe_comment(comment_id, user_id, recipe_id, date, content) " +
+                    "VALUES(" + i + ", " +
+                    ThreadLocalRandom.current().nextInt(0, CookingSiteProperties.getUserAmount()) + ", " +
+                    ThreadLocalRandom.current().nextInt(0, CookingSiteProperties.getRecipeAmount())+ ", '" +
                     date[ThreadLocalRandom.current().nextInt(0, date.length)] + "', '" +
                     content[ThreadLocalRandom.current().nextInt(0, content.length)]+ "')" ;
             DatabaseSession.executeUpdate(RANDOM_QUERY);

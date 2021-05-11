@@ -2,9 +2,11 @@ package com.imse.cookingproject.service;
 
 import com.imse.cookingproject.model.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 //@RequiredArgsConstructor    //neden neden calismiyor
 public class MainService {
     private final Users user = new Users();
@@ -16,6 +18,7 @@ public class MainService {
     private final UserRecipeRating rating = new UserRecipeRating();
 
     public void createAllTables() {
+        log.info("create tables");
         user.createTable();
         recipe.createTable();
         comment.createTable();
@@ -26,6 +29,7 @@ public class MainService {
     }
 
     public void dropAllTables() {
+        log.info("drop tables");
         instruction.dropTable();
         photo.dropTable();
         ingredient.dropTable();

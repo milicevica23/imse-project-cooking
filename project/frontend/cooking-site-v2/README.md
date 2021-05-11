@@ -1,4 +1,4 @@
-# test
+# cooking-site-v2
 
 ## Project setup
 ```

@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("main")
@@ -23,7 +24,7 @@ public class MainController {
         mainService.dropAllTables();
     }
 
-    @PostMapping("/generateData")
+    /**/@PostMapping("/generateData")
     public void generateData() {
         mainService.generateData();
     }

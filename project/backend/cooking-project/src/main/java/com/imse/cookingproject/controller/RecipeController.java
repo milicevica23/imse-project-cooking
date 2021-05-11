@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin
 @RestController
 @RequestMapping("recipe")
 public class RecipeController {
@@ -37,4 +37,5 @@ public class RecipeController {
     public void generateData() {
         recipeService.generateData();
     }
+
 }

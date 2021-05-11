@@ -1,8 +1,12 @@
 package com.imse.cookingproject.model;
 
+import com.google.gson.Gson;
+import com.imse.cookingproject.CookingSiteProperties;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -36,6 +40,8 @@ public class Recipe implements Dto<Recipe>{
 
     @Override
     public void createTable() {
+        log.info("create tables recipe");
+
         String CREATE_RECIPE_TABLE_QUERY = "CREATE TABLE IF NOT EXISTS recipe(recipe_id int primary key, recipe_name varchar, date varchar, " +
                 "preparation_time int, cooking_time int, course varchar, cuisine varchar, user_id int," +
                 "CONSTRAINT fk_users FOREIGN KEY(user_id) REFERENCES users(user_id))";
@@ -44,6 +50,7 @@ public class Recipe implements Dto<Recipe>{
 
     @Override
     public void dropTable() {
+        log.info("drop tables Recipe");
         String DROP_RECIPE_IF_EXISTS_QUERY = "DROP TABLE IF EXISTS recipe";
         DatabaseSession.executeUpdate(DROP_RECIPE_IF_EXISTS_QUERY);
     }
@@ -80,28 +87,22 @@ public class Recipe implements Dto<Recipe>{
     }
 
     public static void generateData() {
-      /*  DatabaseSession.executeUpdate("INSERT INTO recipe(recipe_id, recipe_name, date, preparation_time, cooking_time, course, cuisine) " +
-                "VALUES (0, 'Mac and Cheese', '12-3-21', 5, 15, 'dinner', 'american')");
-        DatabaseSession.executeUpdate("INSERT INTO recipe(recipe_id, recipe_name, date, preparation_time, cooking_time, course, cuisine) " +
-                "VALUES (1, 'Burger', '15-10-20', 15, 30, 'dinner, lunch', 'american')");
-        DatabaseSession.executeUpdate("INSERT INTO recipe(recipe_id, recipe_name, date, preparation_time, cooking_time, course, cuisine) " +
-                "VALUES (2, 'Pizza', '18-10-20', 20, 20, null, 'italian')");
-        DatabaseSession.executeUpdate("INSERT INTO recipe(recipe_id, recipe_name, date, preparation_time, cooking_time, course, cuisine) " +
-                "VALUES (3, 'Banana Bread', '4-4-21', 15, 45, null, null)");*/
-
         String[] recipeName = new String[]{"Mac and Cheese", "Cheese Burger", "Salami Pizza", "Pudding", "Banana Bread", "Carbonara Pasta"};
         String[] date = new String[] {"12-3-21", "15-10-20", "18-10-20", "4-4-21", "24-1-21", "12-5-21"};
         Integer[] time = new Integer[]{5, 10, 15, 20, 30, 40};
         String[] course = new String[]{"breakfast", "lunch", "dinner"};
         String[] cuisine = new String[]{"american", "italian", "austrian", "turkish", "serbian"};
 
-        for(int i = 0; i<50; ++i) {
+        for(int i = 0; i<CookingSiteProperties.getRecipeAmount(); ++i) {
             String RANDOM_RECIPE_QUERY = "INSERT INTO recipe(recipe_id, recipe_name, date, preparation_time, cooking_time, course, cuisine, user_id) " +
                 "VALUES (" + i + ", '" + recipeName[ThreadLocalRandom.current().nextInt(0, recipeName.length)] + "', '" +
                          date[ThreadLocalRandom.current().nextInt(0, date.length)]+ "', " + time[ThreadLocalRandom.current().nextInt(0, time.length)] +
                     ", " + time[ThreadLocalRandom.current().nextInt(0, time.length)] + ", '" + course[ThreadLocalRandom.current().nextInt(0, course.length)] +
-                    "', '" + cuisine[ThreadLocalRandom.current().nextInt(0, cuisine.length)] + "', " + i + ")" ;
+                    "', '" + cuisine[ThreadLocalRandom.current().nextInt(0, cuisine.length)] + "', " +
+                    ThreadLocalRandom.current().nextInt(0, CookingSiteProperties.getUserAmount()) + ")" ;
             DatabaseSession.executeUpdate(RANDOM_RECIPE_QUERY);
         }
     }
+
+
 }

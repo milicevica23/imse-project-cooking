@@ -30,4 +30,5 @@ public class RecipeService {
     public void generateData() {
         Recipe.generateData();
     }
+
 }

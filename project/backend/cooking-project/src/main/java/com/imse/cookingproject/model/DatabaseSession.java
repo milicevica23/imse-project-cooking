@@ -7,11 +7,12 @@ import java.sql.*;
 @Slf4j
 public class DatabaseSession {
 
-    private static final String url = "jdbc:postgresql://localhost:5432/cookproject";
+    private static final String url = "jdbc:postgresql://192.168.0.100:5432/cookproject";
     private static final String username = "admin";
     private static final String password = "admin";
 
     public static void executeUpdate(String statement) {
+        log.info(statement);
         try {
             Connection connection = DriverManager.getConnection(url, username, password);
             Statement session = connection.createStatement();
