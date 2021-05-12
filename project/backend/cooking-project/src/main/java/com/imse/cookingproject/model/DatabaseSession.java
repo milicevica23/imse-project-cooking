@@ -7,7 +7,7 @@ import java.sql.*;
 @Slf4j
 public class DatabaseSession {
 
-    private static final String url = "jdbc:postgresql://192.168.0.100:5432/cookproject";
+    private static final String url = "jdbc:postgresql://192.168.0.100:5432/cookingproject";
     private static final String username = "admin";
     private static final String password = "admin";
 

@@ -1,5 +1,6 @@
 <template>
     <v-container>
+        <h1  class="subheading grey--text">Best Rated Recipes</h1>
         <v-row>
             <v-col v-if="advaceFilteringInd" cols=3>
                 <v-btn @click="changeAdvanceFiltering"> advance filter </v-btn>

@@ -1,6 +1,9 @@
 <template>
   <div class="home"> 
-    <h1 class="dislay-4">Homepage</h1>
+    <h1 class="subheading grey--text">Homepage</h1>
+    <v-container class="my-5">
+       content
+    </v-container>
   </div>
   
 </template>

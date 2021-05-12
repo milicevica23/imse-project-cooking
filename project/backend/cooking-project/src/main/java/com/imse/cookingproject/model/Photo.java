@@ -32,7 +32,7 @@ public class Photo implements Dto<Photo> {
     @Override
     public void createTable() {
         String CREATE_PHOTO_TABLE_QUERY = "CREATE TABLE IF NOT EXISTS photo(photo_id int primary key, description varchar, " +
-                "date varchar, link varchar, recipe_id int, " +
+                "date varchar, link varchar, recipe_id int pr, " +
                 "CONSTRAINT fk_recipe FOREIGN KEY(recipe_id) REFERENCES recipe(recipe_id))";
         DatabaseSession.executeUpdate(CREATE_PHOTO_TABLE_QUERY);
     }
