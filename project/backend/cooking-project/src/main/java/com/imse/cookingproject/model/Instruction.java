@@ -35,7 +35,7 @@ public class Instruction implements Dto<Instruction> {
 
     @Override
     public void dropTable() {
-        String DROP_INSTRUCTION_IF_EXISTS_QUERY = "DROP TABLE IF EXISTS instruction";
+        String DROP_INSTRUCTION_IF_EXISTS_QUERY = "DROP TABLE instruction;";
         DatabaseSession.executeUpdate(DROP_INSTRUCTION_IF_EXISTS_QUERY);
         log.info("drop tables Instruction");
     }

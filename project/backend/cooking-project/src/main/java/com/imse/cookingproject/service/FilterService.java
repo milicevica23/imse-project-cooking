@@ -2,6 +2,7 @@ package com.imse.cookingproject.service;
 
 import com.imse.cookingproject.model.Recipe;
 import lombok.RequiredArgsConstructor;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +34,7 @@ public class FilterService {
 
     }
 
-    public List<String> getRecipesSelected(String recipeName) {
+    public List<JSONObject> getRecipesSelected(String recipeName) {
         if(SOURCE_OF_DATA) {
             return filterServiceSQL.getListRatingSelectedName(recipeName);
         } else {

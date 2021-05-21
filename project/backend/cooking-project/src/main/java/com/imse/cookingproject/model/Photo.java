@@ -32,7 +32,7 @@ public class Photo implements Dto<Photo> {
     @Override
     public void createTable() {
         String CREATE_PHOTO_TABLE_QUERY = "CREATE TABLE IF NOT EXISTS photo(photo_id int primary key, description varchar, " +
-                "date varchar, link varchar, recipe_id int pr, " +
+                "date varchar, link varchar, recipe_id int, " +
                 "CONSTRAINT fk_recipe FOREIGN KEY(recipe_id) REFERENCES recipe(recipe_id))";
         DatabaseSession.executeUpdate(CREATE_PHOTO_TABLE_QUERY);
     }
@@ -41,7 +41,7 @@ public class Photo implements Dto<Photo> {
     public void dropTable() {
         log.info("drop table photo");
 
-        String DROP_PHOTO_IF_EXISTS_QUERY = "DROP TABLE IF EXISTS photo";
+        String DROP_PHOTO_IF_EXISTS_QUERY = "DROP TABLE photo";
         DatabaseSession.executeUpdate(DROP_PHOTO_IF_EXISTS_QUERY);
         log.info("drop table completed");
     }
@@ -80,7 +80,7 @@ public class Photo implements Dto<Photo> {
 
         String[] date = new String[] {"12-3-21", "15-10-20", "18-10-20", "4-4-21", "24-1-21", "12-5-21"};
         String[] descriptions = new String[] {"Preparation"};
-        String[] linkLists = new String[] {"soup", "burger"};
+        String[] linkLists = new String[] {"https://img.chefkoch-cdn.de/rezepte/1491131254215808/bilder/1021900/crop-960x540/spaghetti-carbonara.jpg", "https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/ras/Assets/DF841126-374E-41E5-804D-ADF1A7942454/Derivates/40B4FE9D-7202-452B-B45A-7B4E572715CC.jpg"};
 
 
         int photo_id = 0;

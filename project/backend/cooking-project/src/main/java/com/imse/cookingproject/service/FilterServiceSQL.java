@@ -2,6 +2,7 @@ package com.imse.cookingproject.service;
 
 import com.imse.cookingproject.model.Filter;
 import com.imse.cookingproject.model.Recipe;
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class FilterServiceSQL {
         return Filter.getDescRatingList();
     }
 
-    public List<String> getListRatingSelectedName(String recipeName) {
+    public List<JSONObject> getListRatingSelectedName(String recipeName) {
         return Filter.getSelectedRecipeList(recipeName);
     }
 }

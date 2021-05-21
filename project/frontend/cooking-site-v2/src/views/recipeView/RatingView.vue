@@ -1,38 +1,49 @@
 <template>
-    <v-container>
-        <h1  class="subheading grey--text">Best Rated Recipes</h1>
-        <v-row>
-            <v-col v-if="advaceFilteringInd" cols=3>
-                <v-btn @click="changeAdvanceFiltering"> advance filter </v-btn>
-                FILTER
-            </v-col>
-            <v-col v-else cols=3>
-                <v-btn @click="changeAdvanceFiltering"> advance filter </v-btn>
-                list lands
-            </v-col>
-            <v-col>
-                <v-row>
-                    <v-text-field
-                    v-model="recepiname"
-                    :counter="20"
-                    label="search recepi name"
-                    ></v-text-field>
-                    <v-btn @click="search">
-                        search
-                    </v-btn>
-                </v-row>
-                <v-row v-for="recipe in recipes" :key="recipe.id">
-                    {{recipe}}
-                </v-row>
-            </v-col>
-            <v-col cols=1>
-                RATING
-            </v-col>
-        </v-row>
-    </v-container>
+    <div class="rating">
+        <h1 class="subheading grey--text"> Best Rated Recipes</h1>
 
+        <v-container class="my-5">
 
+            <v-row>
+                <v-col md="12">
+                    <v-row>
+                        <v-text-field
+                        v-model="searchedRecipe" :counter="20" label=""></v-text-field>
+                        <v-btn depressed class="pink white--text" @click="search">
+                            <span>search</span>
+                            <v-icon right>search</v-icon>
+                        </v-btn>
+
+                    </v-row>
+                    
+                </v-col>
+                <v-col v-for="recipe in recipes" :key="recipe.id"  md="6" sm="12">
+                    <v-card class="pa-12">
+                        <v-img
+                            height="250"
+                            :src="recipe.link"
+                            ></v-img>
+                        <v-row class="pa-16"> 
+                            Row 1 
+                        </v-row>
+                        <v-row>
+                            <v-col>
+                                Col 1 
+                            </v-col>
+                            <v-col>
+                                Col 2 
+                            </v-col>
+                        </v-row>
+               
+                    </v-card>
+                </v-col>
+
+            </v-row>
+        </v-container>
+
+    </div>
 </template>
+
 
 <script>
 export default {
@@ -40,7 +51,8 @@ export default {
         return {
             advaceFilteringInd: false,
             recepiname: "",
-            recipes: []
+            recipes: [],
+            searchedRecipe: ""
         }
     },
     methods: {
@@ -49,14 +61,14 @@ export default {
             this.advaceFilteringInd = !this.advaceFilteringInd
         },
         search(){
-            fetch("http://localhost:8080/recipe/listRecipes?recipeName=" + recepiname)
+            fetch("http://localhost:8080/filter/listRecipesSelected?recipename=" + this.searchedRecipe)
             .then(res => res.json())
             .then(data => this.recipes = data)
             .catch(e => console.log(e))
         }
     },
     mounted(){
-        fetch("http://localhost:8080/recipe/listRecipesRatingDesc")
+        fetch("http://localhost:8080/filter/listRecipesRatingDesc")
         .then(res => res.json())
         .then(data => this.recipes = data)
         .catch(e => console.log(e))

@@ -1,5 +1,6 @@
 <template>
-    <v-container>
+    <v-container fluid>
+        <b-card-group></b-card-group>
         <v-row>
             <v-col v-if="advaceFilteringInd" cols=3>
                 <v-btn @click="changeAdvanceFiltering"> advance filter </v-btn>
@@ -35,6 +36,7 @@
     </v-container>
 
 </template>
+
 
 <script>
 export default {
