@@ -1,7 +1,6 @@
 <template>
     <div class="rating">
         <h1 class="subheading grey--text"> Best Rated Recipes</h1>
-
         <v-container class="my-5">
 
             <v-row>
@@ -13,7 +12,6 @@
                             <span>search</span>
                             <v-icon right>search</v-icon>
                         </v-btn>
-
                     </v-row>
                     
                 </v-col>
@@ -23,15 +21,21 @@
                             height="250"
                             :src="recipe.link"
                             ></v-img>
-                        <v-row class="pa-16"> 
-                            Row 1 
+                        <v-row  class="pa-8"> 
+                           {{recipe.recipe_name}}
                         </v-row>
                         <v-row>
                             <v-col>
-                                Col 1 
+                               {{recipe.username}}
                             </v-col>
                             <v-col>
-                                Col 2 
+                                <v-row>
+                                    Prep Time: {{recipe.preparation_time}}
+                                </v-row>
+                                <v-row>
+                                   Rating: {{recipe.average_r}} 
+                                </v-row>
+                                 
                             </v-col>
                         </v-row>
                

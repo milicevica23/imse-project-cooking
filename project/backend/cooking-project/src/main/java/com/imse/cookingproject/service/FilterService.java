@@ -1,7 +1,7 @@
 package com.imse.cookingproject.service;
 
-import com.imse.cookingproject.model.Recipe;
 import lombok.RequiredArgsConstructor;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class FilterService {
     @Autowired
     private FilterServiceNoSQL filterServiceNoSQL;
 
-    public List<String> getRecipesWithCoverList() {
+    public List<JSONObject> getRecipesWithCoverList() throws JSONException {
         if(SOURCE_OF_DATA) {
             return filterServiceSQL.getRecipesWithCoverList();
         } else {
@@ -25,7 +25,7 @@ public class FilterService {
         }
     }
 
-    public List<String> getRecipesRatingDesc() {
+    public List<JSONObject> getRecipesRatingDesc() throws JSONException {
         if(SOURCE_OF_DATA) {
             return filterServiceSQL.getListRatingDesc();
         } else {
@@ -34,22 +34,11 @@ public class FilterService {
 
     }
 
-    public List<JSONObject> getRecipesSelected(String recipeName) {
+    public List<JSONObject> getRecipesSelected(String recipeName) throws JSONException {
         if(SOURCE_OF_DATA) {
             return filterServiceSQL.getListRatingSelectedName(recipeName);
         } else {
             return null;
         }
     }
-    
-
-  /*
-
-    public String getFilterRecipe(String recipeName) {
-        if(SOURCE_OF_DATA) {
-            return filterServiceSQl.getFilteredList(recipeName);
-        } else {
-            return "NO SQL";
-        }
-    }*/
 }

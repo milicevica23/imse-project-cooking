@@ -80,7 +80,15 @@ public class Photo implements Dto<Photo> {
 
         String[] date = new String[] {"12-3-21", "15-10-20", "18-10-20", "4-4-21", "24-1-21", "12-5-21"};
         String[] descriptions = new String[] {"Preparation"};
-        String[] linkLists = new String[] {"https://img.chefkoch-cdn.de/rezepte/1491131254215808/bilder/1021900/crop-960x540/spaghetti-carbonara.jpg", "https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/ras/Assets/DF841126-374E-41E5-804D-ADF1A7942454/Derivates/40B4FE9D-7202-452B-B45A-7B4E572715CC.jpg"};
+        String[] linkLists = new String[] {"https://img.chefkoch-cdn.de/rezepte/1491131254215808/bilder/1021900/crop-960x540/spaghetti-carbonara.jpg",
+                "https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/ras/Assets/DF841126-374E-41E5-804D-ADF1A7942454/Derivates/40B4FE9D-7202-452B-B45A-7B4E572715CC.jpg",
+                "https://img.chefkoch-cdn.de/rezepte/259781101566295/bilder/1330750/crop-960x720/kuerbissuppe-mit-ingwer-und-kokosmilch.jpg",
+                "https://ais.kochbar.de/vms/5ced0e371d90da128862f2c2/1200x1200/burger.jpg",
+                "https://images.eatsmarter.de/sites/default/files/styles/max_size/public/risotto-mit-pilzen-32235.jpg",
+                "https://images.eatsmarter.de/sites/default/files/styles/1600x1200/public/pizza-mit-salami-und-kaese-424770.jpg",
+                "https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/ras/Assets/98C7A5E2-47D4-4495-B6B7-E97446BACD45/Derivates/0CD46940-3985-4FC7-82D3-08B56D53E842.jpg",
+                "https://www.seasonsandsuppers.ca/wp-content/uploads/2013/01/mac-cheese-3.jpg"
+        };
 
 
         int photo_id = 0;

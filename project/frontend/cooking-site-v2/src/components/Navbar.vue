@@ -2,14 +2,18 @@
  <nav>
     <v-app-bar flat app>
         <v-app-bar-nav-icon class="grey--text" @click="drawer = !drawer"></v-app-bar-nav-icon>
-        <v-toolbar-title class="text-uppercase grey--text">
+        <v-toolbar-title class="text-uppercase grey--text" >
             <span class="font-weight-light"> Cooking</span>
             <span class="font-weight-bold">Page</span>
         </v-toolbar-title>
 
         <v-spacer></v-spacer>
-        <v-btn depressed class="grey white--text">
+        <v-btn depressed class="grey white--text mx-2"   to="/login">
             <span>Login</span>
+            <v-icon right>login</v-icon>
+        </v-btn>
+        <v-btn depressed class="grey white--text mx-2" to="/register">
+            <span>Register</span>
             <v-icon right>login</v-icon>
         </v-btn>
     </v-app-bar>

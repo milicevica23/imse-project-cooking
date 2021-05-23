@@ -1,12 +1,9 @@
 package com.imse.cookingproject.model;
 
-import com.google.gson.Gson;
 import com.imse.cookingproject.CookingSiteProperties;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -87,7 +84,7 @@ public class Recipe implements Dto<Recipe>{
     }
 
     public static void generateData() {
-        String[] recipeName = new String[]{"Mac and Cheese", "Cheese Burger", "Salami Pizza", "Pudding", "Banana Bread", "Carbonara Pasta"};
+        String[] recipeName = new String[]{"Mac and Cheese", "Cheese Burger", "Risotto", "Salami Pizza", "Pudding", "Banana Bread", "Carbonara Pasta", "Kürbis Suppe"};
         String[] date = new String[] {"12-3-21", "15-10-20", "18-10-20", "4-4-21", "24-1-21", "12-5-21"};
         Integer[] time = new Integer[]{5, 10, 15, 20, 30, 40};
         String[] course = new String[]{"breakfast", "lunch", "dinner"};

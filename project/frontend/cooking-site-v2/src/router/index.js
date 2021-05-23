@@ -33,9 +33,23 @@ const routes = [
   {
     path: '/about',
     name: 'About',
-    component: () => import('../views/recipeView/deneme.vue')
+    component: () => import('../views/About.vue')
   },
-
+  {
+    path: '/selectedRecipe',
+    name: 'Select',
+    component: () => import('../views/recipeView/SelectedRecipe.vue')
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: () => import('../views/Register.vue')
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('../views/Login.vue')
+  }
 ]
 
 const router = new VueRouter({

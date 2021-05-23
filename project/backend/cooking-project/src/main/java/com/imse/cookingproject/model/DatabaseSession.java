@@ -12,7 +12,7 @@ public class DatabaseSession {
     private static final String password = "admin";
 
     public static void executeUpdate(String statement) {
-        log.info(statement);
+        //log.info(statement);
         try(Connection connection = DriverManager.getConnection(url, username, password);
             Statement session = connection.createStatement();) {
             session.executeUpdate(statement);
