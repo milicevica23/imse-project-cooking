@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "1e37cbd3-9b98-441c-b1d3-eb4b5c6d2686",
+		"_postman_id": "dd9eaa81-4ed5-4415-916d-f755f10e5438",
 		"name": "IMSE Cooking Project",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -135,14 +135,14 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/user/generateUsers",
+									"raw": "localhost:8080/user/generateData",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
 										"user",
-										"generateUsers"
+										"generateData"
 									]
 								}
 							},
@@ -613,7 +613,9 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": null
+								"url": {
+									"raw": ""
+								}
 							},
 							"response": []
 						}
@@ -656,7 +658,77 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": null
+								"url": {
+									"raw": ""
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Filter",
+					"item": [
+						{
+							"name": "listRecipesRatingDesc",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/filter/listRecipesRatingDesc",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"filter",
+										"listRecipesRatingDesc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "listRecipes?recipename",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/filter/listRecipesSelected?recipename=Pudding",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"filter",
+										"listRecipesSelected"
+									],
+									"query": [
+										{
+											"key": "recipename",
+											"value": "Pudding"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "list cover recipes",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/filter/listCoverRecipes",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"filter",
+										"listCoverRecipes"
+									]
+								}
 							},
 							"response": []
 						}
