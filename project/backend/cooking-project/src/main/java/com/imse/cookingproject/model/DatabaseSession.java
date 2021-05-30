@@ -19,10 +19,11 @@ public class DatabaseSession {
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
-        log.info("Database Connected");
+        log.info("Database Connected: " + statement);
     }
 
     public static ResultSet executeQuery(String statement) {
+
         ResultSet resultSet = null;
         try(Connection connection = DriverManager.getConnection(url, username, password);
             Statement session = connection.createStatement();) {

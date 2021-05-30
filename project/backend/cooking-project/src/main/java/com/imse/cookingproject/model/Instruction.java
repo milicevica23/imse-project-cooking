@@ -29,7 +29,7 @@ public class Instruction implements Dto<Instruction> {
 
     @Override
     public void createTable() {
-        String CREATE_INSTRUCTION_TABLE_QUERY = "CREATE TABLE IF NOT EXISTS instruction(instruction_id int primary key, step_number varchar, content varchar, recipe_id int)";
+        String CREATE_INSTRUCTION_TABLE_QUERY = "CREATE TABLE instruction(instruction_id int primary key, step_number int, content varchar, recipe_id int, CONSTRAINT fk_recipe FOREIGN KEY(recipe_id) REFERENCES recipe(recipe_id))";
         DatabaseSession.executeUpdate(CREATE_INSTRUCTION_TABLE_QUERY);
     }
 
@@ -70,16 +70,17 @@ public class Instruction implements Dto<Instruction> {
 
     public static void generateData() {
         String[] content = new String[]{"wash the vegetables", "cut the onions", "boil water", "mash bananas", "put vegetables in the pan"};
-        String[] number = new String[] {"1", "2", "3", "4", "5"};
 
-        for(int i = 0; i<CookingSiteProperties.getInstructionAmount(); ++i) {
-            String RANDOM_INGREDIENT_QUERY = "INSERT INTO instruction(instruction_id, step_number, content, recipe_id) " +
-                    "VALUES(" + i + ", 'Step #" +
-                    number[ThreadLocalRandom.current().nextInt(0, number.length)] + "', '" +
-                    content[ThreadLocalRandom.current().nextInt(0, content.length)]+ "', " +
-                    ThreadLocalRandom.current().nextInt(0, CookingSiteProperties.getRecipeAmount()) + ")" ;
+        Integer instruction_id = 0;
+        for(int i = 0; i<CookingSiteProperties.getRecipeAmount(); ++i) {
+            for(int j = 0; j<CookingSiteProperties.getInstructionAmount();++j){
+                String RANDOM_INGREDIENT_QUERY = "INSERT INTO instruction(instruction_id, step_number, content, recipe_id) " +
+                        "VALUES(" + instruction_id++ + "," + j + ", '" +
+                        content[ThreadLocalRandom.current().nextInt(0, content.length)]+ "', " +
+                        i + ")" ;
 
-            DatabaseSession.executeUpdate(RANDOM_INGREDIENT_QUERY);
+                DatabaseSession.executeUpdate(RANDOM_INGREDIENT_QUERY);
+            }
         }
     }
 }

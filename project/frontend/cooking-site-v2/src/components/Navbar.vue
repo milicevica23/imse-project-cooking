@@ -6,8 +6,9 @@
             <span class="font-weight-light"> Cooking</span>
             <span class="font-weight-bold">Page</span>
         </v-toolbar-title>
-
+        
         <v-spacer></v-spacer>
+        {{$root.currentUser.userName}}
         <v-btn depressed class="grey white--text mx-2"   to="/login">
             <span>Login</span>
             <v-icon right>login</v-icon>

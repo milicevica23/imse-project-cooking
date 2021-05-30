@@ -31,10 +31,11 @@ public class UserRecipeRating implements Dto<UserRecipeRating>{
 
     @Override
     public void createTable() {
-        String CREATE_TABLE_QUERY = "CREATE TABLE IF NOT EXISTS user_recipe_rating(rating_id int primary key, user_id int, recipe_id int, " +
+        String CREATE_TABLE_QUERY = "CREATE TABLE IF NOT EXISTS user_recipe_rating(user_id int, recipe_id int, " +
                 "date varchar, rating int, " +
-                "CONSTRAINT fk_users FOREIGN KEY(user_id) REFERENCES users(user_id)," +
-                "CONSTRAINT fk_recipe FOREIGN KEY(recipe_id) REFERENCES recipe(recipe_id))";
+                "CONSTRAINT pk_user_recipe_rating PRIMARY KEY (user_id, recipe_id),\n" +
+                "CONSTRAINT fk_user_recipe_rating1 FOREIGN KEY(user_id) REFERENCES users(user_id)," +
+                "CONSTRAINT fk_user_recipe_rating2 FOREIGN KEY(recipe_id) REFERENCES recipe(recipe_id))";
         DatabaseSession.executeUpdate(CREATE_TABLE_QUERY);
     }
 
@@ -47,8 +48,8 @@ public class UserRecipeRating implements Dto<UserRecipeRating>{
 
     @Override
     public void saveInsertToDatabase() {
-        String insertQuery = "INSERT INTO user_recipe_rating(rating_id, user_id, recipe_id, date, rating) VALUES " +
-                "(" + this.ratingId + ", " + this.userId + ", " + this.recipeId + ", '" + this.date + "', " + this.rating + ")";
+        String insertQuery = "INSERT INTO user_recipe_rating(user_id, recipe_id, date, rating) VALUES " +
+                "(" + this.userId + ", " + this.recipeId + ", '" + this.date + "', " + this.rating + ")";
         DatabaseSession.executeUpdate(insertQuery);
     }
 
@@ -77,14 +78,25 @@ public class UserRecipeRating implements Dto<UserRecipeRating>{
         String[] date = new String[] {"12-3-21", "15-10-20", "18-10-20", "4-4-21", "24-1-21", "12-5-21"};
         Integer[] rating = new Integer[] {1,2,3,4,5};
 
-        for(int i = 0; i< CookingSiteProperties.getRatingAmount(); ++i) {
-            String RANDOM_QUERY = "INSERT INTO user_recipe_rating(rating_id, user_id, recipe_id, date, rating) " +
-                    "VALUES(" + i + ", " +
-                    ThreadLocalRandom.current().nextInt(0, CookingSiteProperties.getUserAmount()) + ", " +
-                    ThreadLocalRandom.current().nextInt(0, CookingSiteProperties.getRecipeAmount()) + ", '" +
-                    date[ThreadLocalRandom.current().nextInt(0, date.length)] + "', " +
-                    rating[ThreadLocalRandom.current().nextInt(0, rating.length)]+ ")" ;
-            DatabaseSession.executeUpdate(RANDOM_QUERY);
+        for(int j= 0 ; j < CookingSiteProperties.getRecipeAmount();++j){
+            ArrayList<Integer> usedUser = new ArrayList<>();
+            for(int i = 0; i< CookingSiteProperties.getRatingAmount(); ++i) {
+                Integer userId = ThreadLocalRandom.current().nextInt(0, CookingSiteProperties.getUserAmount());
+                if(!usedUser.contains(userId)){
+                    usedUser.add(userId);
+                    String RANDOM_QUERY = "INSERT INTO user_recipe_rating(user_id, recipe_id, date, rating) " +
+                            "VALUES(" +
+                            userId + ", " +
+                            j + ", '" +
+                            date[ThreadLocalRandom.current().nextInt(0, date.length)] + "', " +
+                            rating[ThreadLocalRandom.current().nextInt(0, rating.length)]+ ")" ;
+                    DatabaseSession.executeUpdate(RANDOM_QUERY);
+                }
+            }
+
         }
+
+
+
     }
 }

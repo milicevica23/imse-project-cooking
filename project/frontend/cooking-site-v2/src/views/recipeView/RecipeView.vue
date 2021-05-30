@@ -6,7 +6,6 @@
             <v-row>
                 <v-col md="12">
                     <v-row>
-                        <v-btn col="3" @click="changeAdvanceFiltering"> advance filter </v-btn>
                         <v-text-field
                             v-model="searchedRecipe"
                             :counter="20"
@@ -22,38 +21,11 @@
 
                     </v-row>
                 </v-col>
-
-                <v-col v-for="recipe in recipes" :key="recipe.id" md="6" sm="12">
-                    <v-card class="pa-12">
-                        <v-img
-                            height="250"
-                            :src="recipe.link"
-                            ></v-img>
-                        <v-row  class="pa-8"> 
-                           {{recipe.recipe_name}}
-                        </v-row>
-                        <v-row>
-                            <v-col>
-                               {{recipe.username}}
-                            </v-col>
-                            <v-col>
-                                <v-row>
-                                    Prep Time: {{recipe.preparation_time}}
-                                </v-row>
-                                <v-row>
-                                    Cooking Time: {{recipe.cooking_time}}
-                                </v-row>
-                                <v-row :style="{left: '50%', transform:'translateX(-50%)'}">
-                                    <v-btn class="blue white--text ma-3" to="/selectedRecipe" >
-                                        View Recipe
-                                    </v-btn>
-                                </v-row>
-                                
-                            </v-col>
-                        </v-row>
-               
-                    </v-card>
-                </v-col>
+                <v-row v-if="recipes !==''">
+                    <v-col v-for="recipe in recipes" :key="recipe.id" md="6" sm="12">
+                        <Recipe :recipe=recipe :context="context" />
+                    </v-col>
+                </v-row>
                 
 
             </v-row>
@@ -63,28 +35,31 @@
 
 
 <script>
+
+import Recipe from '@/views/recipeView/Recipe.vue'
+
 export default {
+    components: {
+      Recipe
+    },
     data() {
         return {
             advaceFilteringInd: false,
             searchedRecipe: "",
-            recipes: [{route: '/selectedRecipe'}]
+            recipes: '',
+            context: "listRecipe"
         }
     },
     methods: {
-        changeAdvanceFiltering(){
-            console.log("HEELLO")
-            this.advaceFilteringInd = !this.advaceFilteringInd
-        },
         search(){
-            fetch("http://localhost:8080/filter/listRecipesSelected?recipename=" + this.searchedRecipe)
+            fetch(this.$root.baseUrl + "/recipe/getRecipes?recipeName=" +this.searchedRecipe + "&dbType=" + this.$root.dbType )
             .then(res => res.json())
             .then(data => this.recipes = data)
             .catch(e => console.log(e))
         }
     },
     mounted(){
-        fetch("http://localhost:8080/filter/listCoverRecipes")
+        fetch(this.$root.baseUrl + "/recipe/getRecipes?recipeName=" +this.searchedRecipe + "&dbType=" + this.$root.dbType )
             .then(res => res.json())
             .then(data => this.recipes = data)
             .catch(e => console.log(e))

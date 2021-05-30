@@ -1,12 +1,18 @@
 package com.imse.cookingproject;
 
+import com.imse.cookingproject.service.SQL.UtilsSQL;
+import lombok.extern.slf4j.Slf4j;
+
+import java.util.HashMap;
+
+@Slf4j
 public class CookingSiteProperties {
     private static final Integer userAmount = 20;
     private static final Integer recipeAmount = 30;
-    private static final Integer ratingAmount = 200;
-    private static final Integer commentAmount = 45;
-    private static final Integer photoAmount = 90;
-    private static final Integer instructionAmount = 90;
+    private static final Integer ratingAmount = 5;
+    private static final Integer commentAmount = 5;
+    private static final Integer photoAmount = 10;
+    private static final Integer instructionAmount = 5;
     private static final Integer ingredientAmount = 150;
 
     public static Integer getUserAmount() {
@@ -35,5 +41,18 @@ public class CookingSiteProperties {
 
     public static Integer getIngredientAmount() {
         return ingredientAmount;
+    }
+
+
+    public static HashMap<String, Object> getConfiguration() {
+        HashMap<String, Object> configuration = new HashMap();
+        configuration.put("Users", UtilsSQL.getSizeOfTable("users"));
+        configuration.put("Recipe", UtilsSQL.getSizeOfTable("recipe"));
+        configuration.put("Rating", UtilsSQL.getSizeOfTable("user_recipe_rating"));
+        configuration.put("Comment", UtilsSQL.getSizeOfTable("user_recipe_comment"));
+        configuration.put("Photo", UtilsSQL.getSizeOfTable("photo"));
+        configuration.put("Instructions", UtilsSQL.getSizeOfTable("instruction"));
+        configuration.put("Ingredients", UtilsSQL.getSizeOfTable("ingredient"));
+        return configuration;
     }
 }

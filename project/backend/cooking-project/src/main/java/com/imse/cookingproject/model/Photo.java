@@ -31,9 +31,14 @@ public class Photo implements Dto<Photo> {
 
     @Override
     public void createTable() {
-        String CREATE_PHOTO_TABLE_QUERY = "CREATE TABLE IF NOT EXISTS photo(photo_id int primary key, description varchar, " +
-                "date varchar, link varchar, recipe_id int, " +
-                "CONSTRAINT fk_recipe FOREIGN KEY(recipe_id) REFERENCES recipe(recipe_id))";
+        String CREATE_PHOTO_TABLE_QUERY = "CREATE TABLE photo(photo_id int,\n" +
+                "                    description varchar,\n" +
+                "                    date varchar,\n" +
+                "                    link varchar,\n" +
+                "                    recipe_id int,\n" +
+                "                    CONSTRAINT pk_recipe PRIMARY KEY (photo_id, recipe_id),\n" +
+                "                    CONSTRAINT fk_recipe FOREIGN KEY(recipe_id) REFERENCES recipe(recipe_id) ON DELETE CASCADE\n" +
+                "            );";
         DatabaseSession.executeUpdate(CREATE_PHOTO_TABLE_QUERY);
     }
 
@@ -98,7 +103,7 @@ public class Photo implements Dto<Photo> {
                     "Cover Photo" + "', '" +
                     date[ThreadLocalRandom.current().nextInt(0, date.length)]+ "', '" +
                     linkLists[ThreadLocalRandom.current().nextInt(0, linkLists.length)] + "'," +
-                    ThreadLocalRandom.current().nextInt(0, CookingSiteProperties.getRecipeAmount()) + ")" ;
+                    + i + ")" ;
             DatabaseSession.executeUpdate(RANDOM_PHOTO_QUERY);
             photo_id +=1;
             //log.info(RANDOM_PHOTO_QUERY);
@@ -111,7 +116,7 @@ public class Photo implements Dto<Photo> {
 
                         date[ThreadLocalRandom.current().nextInt(0, date.length)]+ "', '" +
                         linkLists[ThreadLocalRandom.current().nextInt(0, linkLists.length)] + "'," +
-                        ThreadLocalRandom.current().nextInt(0, CookingSiteProperties.getRecipeAmount()) + ")" ;
+                        i + ")" ;
                 DatabaseSession.executeUpdate(RANDOM_PHOTO_QUERY);
                 //log.info(RANDOM_PHOTO_QUERY);
                 photo_id +=1;

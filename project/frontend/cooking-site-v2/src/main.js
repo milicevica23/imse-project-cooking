@@ -6,8 +6,18 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 Vue.config.productionTip = false
 
+
+
 new Vue({
+  data: {
+    currentUser: {"id" : "-1",
+                  "userName" : "Guest"
+               },
+    baseUrl: "http://localhost:8080",
+    dbType : "SQL"
+  },
   router,
   vuetify,
   render: h => h(App)
 }).$mount('#app')
+
