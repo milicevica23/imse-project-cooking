@@ -2,6 +2,7 @@ package com.imse.cookingproject.controller.api;
 
 import com.imse.cookingproject.service.main.RecipeService;
 import lombok.extern.slf4j.Slf4j;
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +23,7 @@ public class RecipeController {
     }
 
     @GetMapping("getOneRecipe")
-    public HashMap<String,Object> getOneRecipe(@RequestParam String recipeId, @RequestParam String dbType){
+    public Document getOneRecipe(@RequestParam String recipeId, @RequestParam String dbType){
         return recipeService.getOneRecipe(recipeId,dbType);
     }
 

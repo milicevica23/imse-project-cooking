@@ -27,7 +27,7 @@ public class RecipeNoSQLService {
         return new HashMap<>();
     }
 
-    public HashMap<String, Object> getOneRecipe(String recipeId) {
+    public Document getOneRecipe(String recipeId) {
         String connectionString = "mongodb://admin:admin@" + mongoHost;
         MongoClient mongoClient = MongoClients.create(connectionString);
         MongoDatabase database = mongoClient.getDatabase("cookingproject");
@@ -35,10 +35,10 @@ public class RecipeNoSQLService {
         ArrayList<HashMap<String,Object>> result_list = new ArrayList<>();
         Document document = recipesCollection.aggregate(
                 Arrays.asList(
-                        Aggregates.match(Filters.eq("recipe._id", "60b3ddef75116868391ae4d4"))
+                        Aggregates.match(Filters.eq("_id", new ObjectId("60b3ddef75116868391ae4d4")))
                 )
         ).first();//.forEach(document -> result_list.add(new HashMap<String,Object>(document)));
-        return new HashMap<>(document);
+        return document;
 
     }
 

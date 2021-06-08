@@ -4,6 +4,7 @@ import com.imse.cookingproject.service.NoSQL.RecipeNoSQLService;
 import com.imse.cookingproject.service.SQL.RecipeSQLService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,12 +29,13 @@ public class RecipeService {
         }
     }
 
-    public HashMap<String, Object> getOneRecipe(String recipeId, String dbType) {
+    public Document getOneRecipe(String recipeId, String dbType) {
         if(dbType.equals("SQL")) {
-            return recipeSQLService.getOneRecipe(recipeId);
+            //return recipeSQLService.getOneRecipe(recipeId);
         }else{
             return recipeNoSQLService.getOneRecipe(recipeId);
         }
+        return null;
     }
 
     public List<HashMap<String, Object>> getRecipes(String recipeName, String filterOrder, String dbType) {

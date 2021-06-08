@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "dd9eaa81-4ed5-4415-916d-f755f10e5438",
+		"_postman_id": "330697cd-c4dc-4cd5-8a72-b21639f13318",
 		"name": "IMSE Cooking Project",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -9,202 +9,462 @@
 			"name": "SQLBackend",
 			"item": [
 				{
-					"name": "Users",
+					"name": "recipe",
 					"item": [
 						{
-							"name": "addUser",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{   \"userId\": 92,\n    \"name\": \"Burcu\",\n    \"username\": \"burcu\",\n    \"password\": \"123\",\n    \"email\": \"burcu@mail\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
+							"name": "SQL",
+							"item": [
+								{
+									"name": "insertNewRecipe",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"recipe_name\": \"burger\",\n    \"date\": \"30-20-21\",\n    \"preparation_time\": 30,\n    \"cooking_time\": 20,\n    \"course\": \"serbien\",\n    \"cuisine\": \"serbien\",\n    \"username\": \"aleks\",\n    \"user_id\":0,\n    \"avg_rating\": 4.5,\n    \"cover_photo_link\": {\n        \"link\": \"https://ais.kochbar.de/vms/5ced0e371d90da128862f2c2/1200x1200/burger.jpg\"\n    },\n    \"ingredient\": [\n        {\n        \"ingredient_name\" : \"salat\",\n        \"amount\": \"3\"\n        },\n        {\n        \"ingredient_name\" : \"cheese\",\n        \"amount\": \"3 slices\"\n        }       \n    ],\n    \"comments\": [\n    ],\n    \"instructions\": [\n        {\n        \"step_num\": 1,\n        \"content\": \"prepare onions\"\n        },\n        {\n            \"step_num\": 2,\n            \"content\": \"prepare canim\"\n        }\n    ]\n    }\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/recipe/insertNewRecipe?dbType=SQL",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"recipe",
+												"insertNewRecipe"
+											],
+											"query": [
+												{
+													"key": "dbType",
+													"value": "SQL"
+												}
+											]
 										}
-									}
+									},
+									"response": []
 								},
-								"url": {
-									"raw": "localhost:8080/user/add",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"user",
-										"add"
-									]
+								{
+									"name": "getOneRecipe",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/recipe/getOneRecipe?recipeId=1&dbType=SQL",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"recipe",
+												"getOneRecipe"
+											],
+											"query": [
+												{
+													"key": "recipeId",
+													"value": "1"
+												},
+												{
+													"key": "dbType",
+													"value": "SQL"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "getRecipes",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/recipe/getRecipes?dbType=SQL&filterOrder",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"recipe",
+												"getRecipes"
+											],
+											"query": [
+												{
+													"key": "recipeName",
+													"value": "",
+													"disabled": true
+												},
+												{
+													"key": "dbType",
+													"value": "SQL"
+												},
+												{
+													"key": "filterOrder",
+													"value": null
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "addComment",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"recipe_id\" : 0,\n    \"user_id\" : 0,\n    \"data\" : \"10.12.2020\",\n    \"content\": \"canim sen yaptin mi bu? <3 cok güzel! :*\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/recipe/addComment?dbType=SQL",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"recipe",
+												"addComment"
+											],
+											"query": [
+												{
+													"key": "dbType",
+													"value": "SQL"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "addComment Copy",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"recipe_name\": \"burger\",\n    \"date\": \"5/29/2021\",\n    \"preparation_time\": \"30\",\n    \"cooking_time\": \"20\",\n    \"course\": \"serbien\",\n    \"cuisine\": \"serbien\",\n    \"username\": \"aleks\",\n    \"user_id\":0,\n    \"avg_rating\": 4.5,\n    \"cover_photo_link\": {\n        \"link\": \"https://ais.kochbar.de/vms/5ced0e371d90da128862f2c2/1200x1200/burger.jpg\"\n    },\n    \"ingredient\": [\n        {\n        \"ingredient_name\" : \"salat\",\n        \"amount\": \"3\"\n        },\n        {\n        \"ingredient_name\" : \"cheese\",\n        \"amount\": \"3 slices\"\n        },\n        {\n        \"ingredient_name\" : \"meat\",\n        \"amount\": \"3\"\n        }\n    ],\n    \"comments\": [\n    ],\n    \"instructions\": [\n        {\n        \"step_num\": 1,\n        \"content\": \"prepare onions\"\n        },\n        {\n            \"step_num\": 2,\n            \"content\": \"prepare canim\"\n        }\n    ]\n    }",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/recipe/insertNewRecipe?dbType=SQL",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"recipe",
+												"insertNewRecipe"
+											],
+											"query": [
+												{
+													"key": "dbType",
+													"value": "SQL"
+												}
+											]
+										}
+									},
+									"response": []
 								}
-							},
-							"response": []
+							]
 						},
 						{
-							"name": "listUsers",
+							"name": "NoSQL",
+							"item": [
+								{
+									"name": "insertNewRecipe",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/recipe/insertNewRecipe?dbType=SQL",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"recipe",
+												"insertNewRecipe"
+											],
+											"query": [
+												{
+													"key": "dbType",
+													"value": "SQL"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "getOneRecipe",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/recipe/getOneRecipe?recipeId=4&dbType=NoSQL",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"recipe",
+												"getOneRecipe"
+											],
+											"query": [
+												{
+													"key": "recipeId",
+													"value": "4"
+												},
+												{
+													"key": "dbType",
+													"value": "NoSQL"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "getRecipes",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/recipe/getRecipes?dbType=SQL&filterOrder",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"recipe",
+												"getRecipes"
+											],
+											"query": [
+												{
+													"key": "recipeName",
+													"value": "",
+													"disabled": true
+												},
+												{
+													"key": "dbType",
+													"value": "SQL"
+												},
+												{
+													"key": "filterOrder",
+													"value": null
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "addComment",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"recipe_id\" : 0,\n    \"user_id\" : 0,\n    \"data\" : \"10.12.2020\",\n    \"content\": \"canim sen yaptin mi bu? <3 cok güzel! :*\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/recipe/addComment?dbType=SQL",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"recipe",
+												"addComment"
+											],
+											"query": [
+												{
+													"key": "dbType",
+													"value": "SQL"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "addComment Copy",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"recipe_name\": \"burger\",\n    \"date\": \"5/29/2021\",\n    \"preparation_time\": \"30\",\n    \"cooking_time\": \"20\",\n    \"course\": \"serbien\",\n    \"cuisine\": \"serbien\",\n    \"username\": \"aleks\",\n    \"user_id\":0,\n    \"avg_rating\": 4.5,\n    \"cover_photo_link\": {\n        \"link\": \"https://ais.kochbar.de/vms/5ced0e371d90da128862f2c2/1200x1200/burger.jpg\"\n    },\n    \"ingredient\": [\n        {\n        \"ingredient_name\" : \"salat\",\n        \"amount\": \"3\"\n        },\n        {\n        \"ingredient_name\" : \"cheese\",\n        \"amount\": \"3 slices\"\n        },\n        {\n        \"ingredient_name\" : \"meat\",\n        \"amount\": \"3\"\n        }\n    ],\n    \"comments\": [\n    ],\n    \"instructions\": [\n        {\n        \"step_num\": 1,\n        \"content\": \"prepare onions\"\n        },\n        {\n            \"step_num\": 2,\n            \"content\": \"prepare canim\"\n        }\n    ]\n    }",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/recipe/insertNewRecipe?dbType=SQL",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"recipe",
+												"insertNewRecipe"
+											],
+											"query": [
+												{
+													"key": "dbType",
+													"value": "SQL"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "configuration",
+					"item": [
+						{
+							"name": "createDB",
 							"protocolProfileBehavior": {
-								"disableBodyPruning": true
+								"disabledSystemHeaders": {}
 							},
 							"request": {
 								"method": "GET",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
 								"url": {
-									"raw": "localhost:8080/user/listUsers",
+									"raw": "localhost:8080/configuration/createDB",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
-										"user",
-										"listUsers"
+										"configuration",
+										"createDB"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "dropUsers",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/user/dropUsers",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"user",
-										"dropUsers"
-									]
-								}
+							"name": "getConfiguration",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
 							},
-							"response": []
-						},
-						{
-							"name": "deleteUser",
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/user/deleteUser/3",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"user",
-										"deleteUser",
-										"3"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "select",
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/user/select/3",
+									"raw": "localhost:8080/configuration/getConfiguration",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
-										"user",
-										"select",
-										"3"
+										"configuration",
+										"getConfiguration"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "generateUsers",
+							"name": "generateData",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
 							"request": {
-								"method": "POST",
+								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/user/generateData",
+									"raw": "localhost:8080/configuration/generateData",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
-										"user",
+										"configuration",
 										"generateData"
 									]
 								}
 							},
 							"response": []
-						}
-					]
-				},
-				{
-					"name": "Main",
-					"item": [
+						},
 						{
-							"name": "create all SQL tables",
+							"name": "migrateData",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
 							"request": {
-								"method": "POST",
+								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/main/createSQLTables",
+									"raw": "localhost:8080/configuration/migrateData",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
-										"main",
-										"createSQLTables"
+										"configuration",
+										"migrateData"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "drop all tables",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/main/dropSQLTables",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"main",
-										"dropSQLTables"
-									]
-								}
+							"name": "dropTables",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
 							},
-							"response": []
-						},
-						{
-							"name": "generate Data",
 							"request": {
-								"method": "POST",
+								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/main/generateData",
+									"raw": "localhost:8080/configuration/dropTables",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
-										"main",
-										"generateData"
+										"configuration",
+										"dropTables"
 									]
 								}
 							},
@@ -213,524 +473,820 @@
 					]
 				},
 				{
-					"name": "Recipe",
+					"name": "login",
 					"item": [
 						{
-							"name": "addRecipe",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"recipeId\" : 2,\n    \"recipeName\": \"Mac and Cheese\",\n    \"date\": \"2020-12-12\",\n    \"preparationTime\": 3,\n    \"cookingTime\": 10,\n    \"course\": \"Dinner\",\n    \"cuisine\": \"American\",\n    \"userId\": 0\n}",
-									"options": {
-										"raw": {
-											"language": "json"
+							"name": "SQL",
+							"item": [
+								{
+									"name": "register",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\" : \"aleks\",\n    \"email\": \"aleks@gmail.com\",\n    \"username\": \"Burcu100\",\n    \"password\": \"1234\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/user/register?dbType=SQL",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"user",
+												"register"
+											],
+											"query": [
+												{
+													"key": "dbType",
+													"value": "SQL"
+												}
+											]
 										}
-									}
+									},
+									"response": []
 								},
-								"url": {
-									"raw": "localhost:8080/recipe/add",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"recipe",
-										"add"
-									]
+								{
+									"name": "login",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/user/login?&userName=Burcu100&userPassword=1234&dbType=SQL",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"user",
+												"login"
+											],
+											"query": [
+												{
+													"key": null,
+													"value": null
+												},
+												{
+													"key": "userName",
+													"value": "Burcu100"
+												},
+												{
+													"key": "userPassword",
+													"value": "1234"
+												},
+												{
+													"key": "dbType",
+													"value": "SQL"
+												}
+											]
+										}
+									},
+									"response": []
 								}
-							},
-							"response": []
+							]
 						},
 						{
-							"name": "listRecipes",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/recipe/listRecipes",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"recipe",
-										"listRecipes"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "deleteRecipe",
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/recipe/deleteRecipe/2",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"recipe",
-										"deleteRecipe",
-										"2"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "dropRecipes",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/recipe/dropRecipes",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"recipe",
-										"dropRecipes"
-									]
-								}
-							},
-							"response": []
+							"name": "NoSql",
+							"item": []
 						}
 					]
 				},
 				{
-					"name": "Ingredient",
+					"name": "crud",
 					"item": [
 						{
-							"name": "addIngred",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"ingredientId\": 0,\n    \"ingredientName\": \"carrot\",\n    \"type\": \"vegetable\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
+							"name": "Users",
+							"item": [
+								{
+									"name": "addUser",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{   \"userId\": 92,\n    \"name\": \"Burcu\",\n    \"username\": \"burcu\",\n    \"password\": \"123\",\n    \"email\": \"burcu@mail\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8080/user/add",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"user",
+												"add"
+											]
 										}
-									}
+									},
+									"response": []
 								},
-								"url": {
-									"raw": "localhost:8080/ingredient/add",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"ingredient",
-										"add"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "listIngredients",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/ingredient/listIngredients",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"ingredient",
-										"listIngredients"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "dropIngredients",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/ingredient/dropIngredients",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"ingredient",
-										"dropIngredients"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "deleteIngredient/0",
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/ingredient/deleteIngredient/0",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"ingredient",
-										"deleteIngredient",
-										"0"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Photo",
-					"item": [
-						{
-							"name": "add photo",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"photoId\": 211,\n    \"description\": \"mac and cheese photo 1\",\n    \"date\": \"17-10-21\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
+								{
+									"name": "listUsers",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8080/user/listUsers",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"user",
+												"listUsers"
+											]
 										}
-									}
+									},
+									"response": []
 								},
-								"url": {
-									"raw": "localhost:8080/photo/add",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"photo",
-										"add"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "list photos",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/photo/listPhotos",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"photo",
-										"listPhotos"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "delete photo",
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/photo/deletePhoto/2",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"photo",
-										"deletePhoto",
-										"2"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "dropPhotos",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/photo/dropPhotos",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"photo",
-										"dropPhotos"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Instruction",
-					"item": [
-						{
-							"name": "add instruction",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"instructionId\": 0, \n    \"stepNumber\": 0,\n    \"content\": \"in this part we add sugar\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
+								{
+									"name": "dropUsers",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/user/dropUsers",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"user",
+												"dropUsers"
+											]
 										}
-									}
+									},
+									"response": []
 								},
-								"url": {
-									"raw": "localhost:8080/instruction/add",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"instruction",
-										"add"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "delete instruction",
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/instruction/deleteInstruction/0",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"instruction",
-										"deleteInstruction",
-										"0"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "list instructions",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/instruction/listInstructions",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"instruction",
-										"listInstructions"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "dropInstructions",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/instruction/dropInstructions",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"instruction",
-										"dropInstructions"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Rating",
-					"item": [
-						{
-							"name": "add rating",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"rating_id\": 100,\n    \"user_id\" : 0,\n    \"recipe_id\": 0,\n    \"date\": \"212-03-2021\",\n    \"rating\": 5\n}",
-									"options": {
-										"raw": {
-											"language": "json"
+								{
+									"name": "deleteUser",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/user/deleteUser/3",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"user",
+												"deleteUser",
+												"3"
+											]
 										}
-									}
+									},
+									"response": []
 								},
-								"url": {
-									"raw": "localhost:8080/rating/add/",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"rating",
-										"add",
-										""
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "list ratings",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": ""
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Comment",
-					"item": [
-						{
-							"name": "add Comment",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"comment_id\": 100,\n    \"user_id\" : 0,\n    \"recipe_id\": 0,\n    \"date\": \"212-03-2021\",\n    \"content\": \"nice one\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
+								{
+									"name": "select",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/user/select/3",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"user",
+												"select",
+												"3"
+											]
 										}
-									}
+									},
+									"response": []
 								},
-								"url": {
-									"raw": "localhost:8080/comment/add/",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"comment",
-										"add",
-										""
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "list comments",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": ""
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Filter",
-					"item": [
-						{
-							"name": "listRecipesRatingDesc",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/filter/listRecipesRatingDesc",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"filter",
-										"listRecipesRatingDesc"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "listRecipes?recipename",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/filter/listRecipesSelected?recipename=Pudding",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"filter",
-										"listRecipesSelected"
-									],
-									"query": [
-										{
-											"key": "recipename",
-											"value": "Pudding"
+								{
+									"name": "generateUsers",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/user/generateData",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"user",
+												"generateData"
+											]
 										}
-									]
+									},
+									"response": []
 								}
-							},
-							"response": []
+							]
 						},
 						{
-							"name": "list cover recipes",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/filter/listCoverRecipes",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"filter",
-										"listCoverRecipes"
-									]
+							"name": "Main",
+							"item": [
+								{
+									"name": "create all SQL tables",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/main/createSQLTables",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"main",
+												"createSQLTables"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "drop all tables",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/main/dropSQLTables",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"main",
+												"dropSQLTables"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "generate Data",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/main/generateData",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"main",
+												"generateData"
+											]
+										}
+									},
+									"response": []
 								}
-							},
-							"response": []
+							]
+						},
+						{
+							"name": "Recipe",
+							"item": [
+								{
+									"name": "addRecipe",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"recipeId\" : 2,\n    \"recipeName\": \"Mac and Cheese\",\n    \"date\": \"2020-12-12\",\n    \"preparationTime\": 3,\n    \"cookingTime\": 10,\n    \"course\": \"Dinner\",\n    \"cuisine\": \"American\",\n    \"userId\": 0\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8080/recipe/add",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"recipe",
+												"add"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "listRecipes",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/recipe/listRecipes",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"recipe",
+												"listRecipes"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "deleteRecipe",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/recipe/deleteRecipe/2",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"recipe",
+												"deleteRecipe",
+												"2"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "dropRecipes",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/recipe/dropRecipes",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"recipe",
+												"dropRecipes"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Ingredient",
+							"item": [
+								{
+									"name": "addIngred",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"ingredientId\": 0,\n    \"ingredientName\": \"carrot\",\n    \"type\": \"vegetable\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8080/ingredient/add",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"ingredient",
+												"add"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "listIngredients",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/ingredient/listIngredients",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"ingredient",
+												"listIngredients"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "dropIngredients",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/ingredient/dropIngredients",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"ingredient",
+												"dropIngredients"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "deleteIngredient/0",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/ingredient/deleteIngredient/0",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"ingredient",
+												"deleteIngredient",
+												"0"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Photo",
+							"item": [
+								{
+									"name": "add photo",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"photoId\": 211,\n    \"description\": \"mac and cheese photo 1\",\n    \"date\": \"17-10-21\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8080/photo/add",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"photo",
+												"add"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "list photos",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/photo/listPhotos",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"photo",
+												"listPhotos"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "delete photo",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/photo/deletePhoto/2",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"photo",
+												"deletePhoto",
+												"2"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "dropPhotos",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/photo/dropPhotos",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"photo",
+												"dropPhotos"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Instruction",
+							"item": [
+								{
+									"name": "add instruction",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"instructionId\": 0, \n    \"stepNumber\": 0,\n    \"content\": \"in this part we add sugar\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8080/instruction/add",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"instruction",
+												"add"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "delete instruction",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/instruction/deleteInstruction/0",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"instruction",
+												"deleteInstruction",
+												"0"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "list instructions",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/instruction/listInstructions",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"instruction",
+												"listInstructions"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "dropInstructions",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/instruction/dropInstructions",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"instruction",
+												"dropInstructions"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Rating",
+							"item": [
+								{
+									"name": "add rating",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"rating_id\": 100,\n    \"user_id\" : 0,\n    \"recipe_id\": 0,\n    \"date\": \"212-03-2021\",\n    \"rating\": 5\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8080/rating/add/",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"rating",
+												"add",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "list ratings",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": ""
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Comment",
+							"item": [
+								{
+									"name": "add Comment",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"comment_id\": 100,\n    \"user_id\" : 0,\n    \"recipe_id\": 0,\n    \"date\": \"212-03-2021\",\n    \"content\": \"nice one\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8080/comment/add/",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"comment",
+												"add",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "list comments",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": ""
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Filter",
+							"item": [
+								{
+									"name": "listRecipesRatingDesc",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/filter/listRecipesRatingDesc",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"filter",
+												"listRecipesRatingDesc"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "listRecipes?recipename",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/filter/listRecipesSelected?recipename=Pudding",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"filter",
+												"listRecipesSelected"
+											],
+											"query": [
+												{
+													"key": "recipename",
+													"value": "Pudding"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "list cover recipes",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/filter/listCoverRecipes",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"filter",
+												"listCoverRecipes"
+											]
+										}
+									},
+									"response": []
+								}
+							]
 						}
 					]
 				}
