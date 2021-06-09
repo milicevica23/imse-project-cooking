@@ -9,8 +9,8 @@
                 create SQL and generate Data 
               </v-btn>
            </v-row>
-            <v-row>
-              {{configs}}
+            <v-row v-for="(key,value) in configs" :key="value">
+               {{value}}: {{key}}
             </v-row>
             
          </v-col>

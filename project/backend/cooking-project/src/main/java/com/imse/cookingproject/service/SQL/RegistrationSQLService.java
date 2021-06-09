@@ -1,6 +1,7 @@
 package com.imse.cookingproject.service.SQL;
 
 import lombok.extern.slf4j.Slf4j;
+import org.bson.Document;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -9,7 +10,7 @@ import java.util.HashMap;
 @Slf4j
 public class RegistrationSQLService {
 
-    public HashMap<String, Object> checkLogin(String userName, String userPassword) {
+    public Document checkLogin(String userName, String userPassword) {
         return UtilsSQL.checkUser(userName,userPassword);
     }
 

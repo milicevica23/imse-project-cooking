@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import javax.print.Doc;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -133,19 +134,18 @@ public class UtilsSQL {
     }
 
 
-    public static HashMap<String, Object> checkUser(String userName, String userPassword) {
+    public static Document checkUser(String userName, String userPassword) {
         String query = "select * from users where username='" + userName + "' and password='" + userPassword + "'";
-        HashMap<String, Object> response = new HashMap<>();
-        response.put("status", "not defined");
+        Document response = new Document();
+        response.append("status", "not defined");
         ResultSet resultSet = DatabaseSession.executeQuery(query);
-
         try{
-            if(resultSet == null || resultSet.wasNull()) return response;
-            while (resultSet.next()) {
-                response.put("status", "userExists");
-                response.put("id",resultSet.getInt("user_id"));
-                response.put("userName",resultSet.getString("username"));
-            }
+            if(!resultSet.next()) return response;
+            do{
+                response.append("status", "userExists");
+                response.append("_id",resultSet.getInt("user_id"));
+                response.append("username",resultSet.getString("username"));
+            }while (resultSet.next());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -161,11 +161,9 @@ public class UtilsSQL {
         log.info(query);
         ResultSet resultSet = DatabaseSession.executeQuery(query);
         try{
-            if(!resultSet.wasNull()) {
-                while (resultSet.next()) {
+            if(resultSet.next()) {
                     response.put("status", "user exists");
                     return response;
-                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -203,4 +201,24 @@ public class UtilsSQL {
         return max_id;
     }
 
+    public static List<Document> getrecipeInstructions(Object recipe_id) {
+        List<Document> instructions = new ArrayList<Document>();
+        String query = "select * from instruction where recipe_id="+ recipe_id + " order by step_number asc";
+        ResultSet resultSet = DatabaseSession.executeQuery(query);
+        try{
+            if(resultSet == null || !resultSet.next()) return instructions;
+            do {
+                Integer step_number = resultSet.getInt("step_number");
+                String content = resultSet.getString("amount");
+                ObjectId id = new ObjectId();
+                Document document = new Document("_id", id)
+                        .append("step_number", step_number)
+                        .append("amount", content);
+                instructions.add(document);
+            }while (resultSet.next());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return instructions;
+    }
 }

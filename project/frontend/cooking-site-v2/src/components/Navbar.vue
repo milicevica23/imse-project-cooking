@@ -8,6 +8,11 @@
         </v-toolbar-title>
         
         <v-spacer></v-spacer>
+        <v-switch
+            v-model="switchDB"
+            :label= dbType
+            @click="changeDB"
+        ></v-switch>
         {{$root.currentUser.userName}}
         <v-btn depressed class="grey white--text mx-2"   to="/login">
             <span>Login</span>
@@ -47,7 +52,25 @@ export default {
                 {icon: 'post_add', text: 'Write a new Recipe', route: '/newRecipe'},
                 {icon: 'person', text: 'Account', route: '/account'},  
                 {icon: 'people', text: 'Team: About Us', route: '/about'}
-            ]
+            ],
+            switchDB: false,
+            dbType: "SQL"
+        }
+    },
+    methods:{
+        changeDB(){
+            if(this.switchDB) {
+                this.$root.dbType = "NoSQL" 
+                this.dbType = "NoSQL"
+                console.log(this.switchDB,this.$root.dbType)
+            }else{
+                this.$root.dbType = "SQL"
+                this.dbType = "SQL"
+                console.log(this.switchDB,this.$root.dbType)
+            }
+            this.$router.push('Login')
+            this.$root.currentUser.id = -1
+            this.$root.currentUser.userName = "Guest"
         }
     }
 }

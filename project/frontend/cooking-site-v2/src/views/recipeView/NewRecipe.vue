@@ -13,7 +13,7 @@
                 required
             ></v-text-field>
             <v-text-field
-                v-model="recipe.cover_photo_link.link"
+                v-model="recipe.cover_photo.link"
                 label="recipe cover photo"
                 required
             ></v-text-field>
@@ -151,7 +151,7 @@
         cuisine: 'serbien',
         username: 'aleks',
         avg_rating: 4.5,
-        cover_photo_link: {
+        cover_photo: {
             link: "https://ais.kochbar.de/vms/5ced0e371d90da128862f2c2/1200x1200/burger.jpg"
         },
         ingredient: [
@@ -235,7 +235,8 @@
         .then((res) => { return res.json(); })
         .then((data) => { 
             if( data.status ==="ok"){
-               this.$router.push({name: 'Select', params: { recipe_id: data.recipe_id}})
+              console.log(data._id);
+              this.$router.push({name: 'Select', params: { recipe_id: data._id}})
             }else{
               console.log(data.status)
             }

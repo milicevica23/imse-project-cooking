@@ -63,9 +63,9 @@
             .then(res => res.json())
             .then((data) => {
               if(data.status === "userExists"){
-                self.$root.currentUser.id = data.id;
-                self.$root.currentUser.userName = data.userName;
-                this.message = "Loged as " + data.userName
+                self.$root.currentUser.id = data._id;
+                self.$root.currentUser.userName = data.username;
+                this.message = "Loged as " + data.username
               }else{
                 this.message = "No user found"
               }

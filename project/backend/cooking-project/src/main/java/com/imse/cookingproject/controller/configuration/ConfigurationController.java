@@ -23,7 +23,7 @@ public class ConfigurationController {
     public void createDB() {
         if(!createDone){
             configurationService.create();
-            //configurationService.generateData();
+            configurationService.generateData();
             createDone = true;
         }
     }

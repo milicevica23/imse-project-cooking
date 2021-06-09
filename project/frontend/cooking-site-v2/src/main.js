@@ -11,7 +11,7 @@ Vue.config.productionTip = false
 new Vue({
   data: {
     currentUser: {"id" : "-1",
-                  "userName" : "aGuest"
+                  "userName" : "Guest"
                },
     baseUrl: "http://localhost:8080",
     dbType : "SQL"

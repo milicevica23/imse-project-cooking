@@ -77,7 +77,7 @@ public class UserRecipeComment implements Dto<UserRecipeComment>{
         String[] date = new String[] {"2019-02-13", "2017-01-13", "2015-06-26", "2014-03-01", "2013-01-01", "2013-06-01"};
         String[] content = new String[]{"best recipe", "liked this", "too salty", "could be more sweet"};
         Integer comment_id = 0;
-        for(int j=0; j<CookingSiteProperties.getCommentAmount(); j++){
+        for(int j=0; j<CookingSiteProperties.getRecipeAmount(); j++){
             for(int i = 0; i<CookingSiteProperties.getCommentAmount(); ++i) {
                 String RANDOM_QUERY = "INSERT INTO user_recipe_comment(comment_id, user_id, recipe_id, date, content) " +
                         "VALUES(" + comment_id++ + ", " +

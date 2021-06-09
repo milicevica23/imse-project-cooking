@@ -31,14 +31,13 @@ public class RecipeService {
 
     public Document getOneRecipe(String recipeId, String dbType) {
         if(dbType.equals("SQL")) {
-            //return recipeSQLService.getOneRecipe(recipeId);
-        }else{
+            return recipeSQLService.getOneRecipe(recipeId);
+        }else {
             return recipeNoSQLService.getOneRecipe(recipeId);
         }
-        return null;
     }
 
-    public List<HashMap<String, Object>> getRecipes(String recipeName, String filterOrder, String dbType) {
+    public List<Document> getRecipes(String recipeName, String filterOrder, String dbType) {
         if(dbType.equals("SQL")) {
             return recipeSQLService.getRecipes(recipeName,filterOrder);
         }else{

@@ -132,6 +132,10 @@ public class UtilsNoSQL {
             List<Document> recipe_ratings = UtilsSQL.getRecipeRatings(recipe.get("recipe_id"),mapping_user_id);
             recipe.append("ratings", recipe_ratings);
 
+            //extract instructions
+            List<Document> recipe_instructions = UtilsSQL.getrecipeInstructions(recipe.get("recipe_id"));
+            recipe.append("instructions", recipe_instructions);
+
             recipe.remove("recipe_id");
         }
 

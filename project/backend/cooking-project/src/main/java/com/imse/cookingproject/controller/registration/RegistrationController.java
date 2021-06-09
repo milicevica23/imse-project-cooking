@@ -3,6 +3,7 @@ package com.imse.cookingproject.controller.registration;
 
 import com.imse.cookingproject.service.main.RegistrationService;
 import lombok.extern.slf4j.Slf4j;
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ public class RegistrationController {
 
 
     @GetMapping("/login")
-    public HashMap<String, Object> loginUser(@RequestParam String userName, @RequestParam String userPassword, @RequestParam String dbType){
+    public Document loginUser(@RequestParam String userName, @RequestParam String userPassword, @RequestParam String dbType){
         return registrationService.checkUser(userName,userPassword,dbType);
     }
 

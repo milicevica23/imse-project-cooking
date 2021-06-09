@@ -101,6 +101,7 @@
             username: this.username,
             password: this.password,
             email: this.email
+           
           };
         
           var self = this;
@@ -121,6 +122,7 @@
                   this.message = data.status
                 }
            }) 
+          this.$router.push('Login')
         }else{
           // for everything add message
           this.message = "smt is wrong";

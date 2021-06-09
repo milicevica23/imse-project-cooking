@@ -24,11 +24,13 @@ public class RecipeController {
 
     @GetMapping("getOneRecipe")
     public Document getOneRecipe(@RequestParam String recipeId, @RequestParam String dbType){
+        log.info("recipe_id: " + recipeId + " " + "dbtype: " + dbType);
         return recipeService.getOneRecipe(recipeId,dbType);
     }
 
     @GetMapping("getRecipes")
-    public List<HashMap<String,Object>> getRecipes(@RequestParam(defaultValue = "") String recipeName, @RequestParam(defaultValue = "") String filterOrder, @RequestParam String dbType){
+    public List<Document> getRecipes(@RequestParam(defaultValue = "") String recipeName, @RequestParam(defaultValue = "") String filterOrder, @RequestParam String dbType){
+        log.info("recipeName: " + recipeName + " " + "dbtype: " + dbType + " " + "filterOrder: " + filterOrder);
         return recipeService.getRecipes(recipeName,filterOrder,dbType);
     }
 

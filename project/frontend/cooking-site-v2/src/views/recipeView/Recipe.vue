@@ -26,7 +26,7 @@
             <v-img
                 contain
                 :height=photoHeight
-                :src="recipe.cover_photo_link.link"
+                :src="recipe.cover_photo.link"
             ></v-img>
         </v-col>
     </v-row>
@@ -124,7 +124,7 @@ export default {
                 
             
             var payload = {
-                recipe_id: this.recipe.recipe_id,
+                recipe_id: this.recipe._id,
                 user_id: this.$root.currentUser.id,
                 date: current.toISOString().split('T')[0],
                 content: this.new_comment
@@ -151,8 +151,8 @@ export default {
 
         },
         openSelectedRecipe(){
-            console.log("recipe: " + this.recipe.recipe_id)
-            this.$router.push({name: 'Select', params: { recipe_id: this.recipe.recipe_id}})
+            console.log("recipe: " + this.recipe._id)
+            this.$router.push({name: 'Select', params: { recipe_id: this.recipe._id}})
         }
     },
     mounted(){
