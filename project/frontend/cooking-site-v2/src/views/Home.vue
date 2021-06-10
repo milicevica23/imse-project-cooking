@@ -41,16 +41,24 @@
     }),
     methods: {
       createDB () {
-        fetch("http://localhost:8080/configuration/createDB")
+        fetch(this.$root.baseUrl + "/configuration/createDB")
         .catch(e => console.log(e))
       },
       migrateDB() {
-        fetch("http://localhost:8080/configuration/migrateData")
+        fetch(this.$root.baseUrl + "/configuration/migrateData")
         .catch(e => console.log(e))
       }
     },
     mounted(){
-        fetch("http://localhost:8080/configuration/getConfiguration")
+        fetch(this.$root.baseUrl + "/configuration/getConfiguration",{
+          headers: {
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Headers" : "Content-Type",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+        
+              }
+        })
         .then(res => res.json())
         .then(data => this.configs = data)
         .catch(e => console.log(e))

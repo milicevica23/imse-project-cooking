@@ -20,6 +20,7 @@ public class ConfigurationSQLService {
 
     public void createAllTables() {
         log.info("create tables");
+        DatabaseSession.createDatabase();
         user.createTable();
         recipe.createTable();
         comment.createTable();
