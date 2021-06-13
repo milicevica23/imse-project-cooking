@@ -1,6 +1,6 @@
 <template>
   <div class="newRecipe">
-    <h1 class="subheading grey--text">This is an  new recipe</h1>
+    <h1 class="subheading grey--text">Create a new recipe</h1>
     
     <v-container class="my-5">
        <v-row>
@@ -177,15 +177,15 @@
             },
             {
                 step_num: 2,
-                content: "prepare canim"
+                content: "prepare vegetables"
             },
             {
                 step_num: 3,
-                content: "Du bist eine legende"
+                content: "slice cheese"
             },
             {
                 step_num: 4,
-                content: "cok seviyorum"
+                content: "mash potatoes"
             }
         ]
     }

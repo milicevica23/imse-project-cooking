@@ -150,9 +150,9 @@ public class RecipeNoSQLService {
         MongoClient mongoClient = MongoClients.create(connectionString);
         MongoDatabase database = mongoClient.getDatabase("cookingproject");
         MongoCollection<Document> recipesCollection = database.getCollection("recipes");
-
+        ArrayList<Document> response = new ArrayList<>();
         Field f1  = new Field<>("avg_rating", new Document("$avg","$ratings.rating"));
-        Field f2  = new Field<>("user_name", new Document("$arrayElemAt", Arrays.asList("$user",0)));
+    /*      Field f2  = new Field<>("user_name", new Document("$arrayElemAt", Arrays.asList("$user",0)));
         Bson filter;
         if(recipeName.equals("")){
             filter  = Filters.ne("recipe_name", recipeName);
@@ -161,17 +161,17 @@ public class RecipeNoSQLService {
         }
 
         AggregateIterable<Document> result = recipesCollection.aggregate(
-                Arrays.asList(
+              Arrays.asList(
                         Aggregates.match(filter),
                         Aggregates
                         )
                 ));
-        ArrayList<Document> response = new ArrayList<>();
+
         for(Document doc : result){
             doc.append("_id", doc.get("_id").toString());
             doc.append("user_id", doc.get("user_id").toString());
             response.add(doc);
-        }
+        }*/
         return response;
     }
 
