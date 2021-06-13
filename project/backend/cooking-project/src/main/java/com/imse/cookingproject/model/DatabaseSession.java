@@ -1,12 +1,14 @@
 package com.imse.cookingproject.model;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.sql.*;
 
 @Slf4j
 public class DatabaseSession {
-    private static final String base_url = "jdbc:postgresql://postgres:5432/";
+    //private static final String base_url = "jdbc:postgresql://postgres:5432/";
+    private static final String base_url = "jdbc:postgresql://localhost:5432/";
     private static final String url = base_url + "cookingproject";
     private static final String username = "admin";
     private static final String password = "admin";

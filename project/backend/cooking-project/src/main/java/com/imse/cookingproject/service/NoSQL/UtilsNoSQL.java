@@ -68,6 +68,7 @@ public class UtilsNoSQL {
                 mapping_user_id.put(userId,id);
                 Document document = new Document("_id", id)
                         .append("username", userName)
+                        .append("user_id", userId)
                         .append("password", password)
                         .append("name",name)
                         .append("email",email);
@@ -76,8 +77,30 @@ public class UtilsNoSQL {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        for(var user :users ){
+            ArrayList<Document> follows = getUsers(mapping_user_id,(int)user.get("user_id"));
+            user.append("follows",follows);
+            user.remove("user_id");
+        }
+
         userCollection.insertMany(users);
         return mapping_user_id;
+    }
+
+    private static ArrayList<Document> getUsers(HashMap<Integer, ObjectId> mapping_user_id, Integer user_id) {
+        String query = "select * from user_follow_user where user_id_1 = "+ user_id;
+        ResultSet resultSet = DatabaseSession.executeQuery(query);
+        ArrayList<Document> follows = new ArrayList<>();
+        try{
+            if(resultSet == null || !resultSet.next()) return follows;
+            do {
+                follows.add(new Document("user_id", mapping_user_id.get(resultSet.getInt("user_id_2"))).append("follows_since", resultSet.getString("follows_since")));
+            }while (resultSet.next());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return follows;
     }
 
     public static void migrateRecipe(MongoClient mongoClient, HashMap<Integer,ObjectId> mapping_user_id) {

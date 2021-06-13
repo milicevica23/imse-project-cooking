@@ -53,4 +53,12 @@ public class RecipeService {
             return recipeNoSQLService.addComment(payload);
         }
     }
+
+    public HashMap<String, Object> addRating(HashMap<String, Object> payload, String dbType) {
+        if(dbType.equals("SQL")) {
+            return recipeSQLService.addRating(payload);
+        }else{
+            return recipeNoSQLService.addRating(payload);
+        }
+    }
 }

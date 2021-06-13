@@ -116,11 +116,7 @@ public class RecipeSQLService {
             e.printStackTrace();
         }
 
-
-
-
         // get photos
-
         query = "select * from photo where recipe_id ="+ recipeId +";";
         resultSet = DatabaseSession.executeQuery(query);
         ArrayList<Document> photos = new ArrayList<>();
@@ -178,7 +174,7 @@ public class RecipeSQLService {
                     instruction.append("step_num", resultSet.getInt("step_number"));
                     instruction.append("content", resultSet.getString("content"));
                     instructions.add(instruction);
-                }while (resultSet.next());
+                } while (resultSet.next());
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -199,7 +195,7 @@ public class RecipeSQLService {
                     comment.append("date", resultSet.getString("date"));
                     comment.append("content", resultSet.getString("content"));
                     comments.add(comment);
-                }while (resultSet.next());
+                } while (resultSet.next());
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -241,12 +237,13 @@ public class RecipeSQLService {
 
     public List<Document> getRecipes(String recipeName, String filterOrder) {
         String query = "select * from (select temp.recipe_id, coalesce(avg(temp.rating),0) average_r from\n" +
-                "                (select recipe.recipe_id, user_recipe_rating.rating, recipe.date from recipe left join user_recipe_rating on recipe.recipe_id = user_recipe_rating.recipe_id) temp\n" +
-                "                group by temp.recipe_id) average_table left join (SELECT rec.recipe_id, rec.preparation_time, rec.recipe_name, rec.course, rec.cuisine, rec.preparation_time,rec.cooking_time, rec.date, us.username, us.user_id, ph.link from recipe rec left join users us on rec.user_id = us.user_id\n" +
-                "                left join (select recipe_id, description, link from photo where description = 'Cover Photo')\n" +
-                "                ph on rec.recipe_id = ph.recipe_id) recipe_info on average_table.recipe_id = recipe_info.recipe_id\n" +
-                "                where recipe_name like '" + recipeName + "%'\n" +
-                "                order by average_r " + filterOrder +" LIMIT " +  10;
+                        "(select recipe.recipe_id, user_recipe_rating.rating, recipe.date from recipe left join user_recipe_rating on recipe.recipe_id = user_recipe_rating.recipe_id) temp\n" +
+                        "group by temp.recipe_id) average_table left join (SELECT rec.recipe_id, rec.preparation_time, rec.recipe_name, rec.course, rec.cuisine, rec.preparation_time,rec.cooking_time, " +
+                        "rec.date, us.username, us.user_id, ph.link from recipe rec left join users us on rec.user_id = us.user_id\n" +
+                        "left join (select recipe_id, description, link from photo where description = 'Cover Photo')\n" +
+                        "ph on rec.recipe_id = ph.recipe_id) recipe_info on average_table.recipe_id = recipe_info.recipe_id\n" +
+                        "where recipe_name like '" + recipeName + "%'\n" +
+                        "order by average_r " + filterOrder +" LIMIT " +  10;
         ResultSet resultSet = DatabaseSession.executeQuery(query);
         ArrayList<Document> response = new ArrayList<>();
         try{
@@ -310,6 +307,34 @@ public class RecipeSQLService {
         DatabaseSession.executeUpdate(query);
         response.put("status", "ok");
         return new HashMap<>();
+    }
+
+    public HashMap<String, Object> addRating(HashMap<String, Object> payload){
+        String query = "select * from user_recipe_rating where user_id =" + payload.get("user_id") + " and recipe_id = " + payload.get("recipe_id");
+        ResultSet resultSet = DatabaseSession.executeQuery(query);
+        HashMap<String,Object> response = new HashMap<>();
+        response.put("status", "you have already rated");
+        try {
+            if (!resultSet.next()){
+                response.put("status", "ok");
+                String insertQuery = "INSERT INTO user_recipe_rating(user_id, recipe_id, date, rating) VALUES " +
+                        "(" + payload.get("user_id") + ", " +  payload.get("recipe_id") + ", '" + payload.get("date") + "', " + payload.get("rating") + ")";
+                DatabaseSession.executeUpdate(insertQuery);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        query = "select recipe_id, avg(rating) as avg_rating from user_recipe_rating where recipe_id = " + payload.get("recipe_id") +" GROUP BY recipe_id";
+        resultSet = DatabaseSession.executeQuery(query);
+
+        try {
+            if (!resultSet.next()) return response;
+            response.put("new_avg_rating", resultSet.getDouble("avg_rating"));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return response;
     }
 }
 

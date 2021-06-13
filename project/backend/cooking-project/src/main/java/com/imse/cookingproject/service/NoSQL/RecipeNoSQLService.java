@@ -162,20 +162,8 @@ public class RecipeNoSQLService {
 
         AggregateIterable<Document> result = recipesCollection.aggregate(
                 Arrays.asList(
-                        Aggregates.match(filter)
-                        ,Aggregates.lookup("users", "user_id","_id","user"),
-                        Aggregates.addFields(f1), Aggregates.addFields(f2),
-                        Aggregates.project(new Document("username","$user_name.username")
-                                                        .append("_id",1)
-                                                        .append("user_id",1)
-                                                        .append("recipe_name",1)
-                                                        .append("date",1)
-                                                        .append("preparation_time",1)
-                                                        .append("avg_rating",1)
-                                                        .append("cooking_time",1)
-                                                        .append("course",1)
-                                                        .append("cuisine",1)
-                                                        .append("cover_photo.link",1)
+                        Aggregates.match(filter),
+                        Aggregates
                         )
                 ));
         ArrayList<Document> response = new ArrayList<>();
@@ -196,5 +184,34 @@ public class RecipeNoSQLService {
         recipesCollection.updateOne(new Document("_id", new ObjectId((String) payload.get("recipe_id"))), new Document("$push", new Document("comments", comment)));
 
         return new HashMap<>();
+    }
+
+    public HashMap<String, Object> addRating(HashMap<String, Object> payload) {
+        String connectionString = "mongodb://admin:admin@" + mongoHost;
+        MongoClient mongoClient = MongoClients.create(connectionString);
+        MongoDatabase database = mongoClient.getDatabase("cookingproject");
+        MongoCollection<Document> recipesCollection = database.getCollection("recipes");
+        HashMap<String,Object> response = new HashMap<>();
+        response.put("status", "you have already rated");
+        Bson query= Filters.and(
+                Filters.eq("_id", new ObjectId((String)payload.get("recipe_id"))),
+                Filters.eq("ratings.user_id", new Document("$eq", new ObjectId((String)payload.get("user_id")))
+                )
+        );
+        Document query_result = recipesCollection.find(query).first();
+        if (query_result == null) {
+            response.put("status", "ok");
+            Document rating = new Document("_id", new ObjectId()).append("user_id", new ObjectId((String) payload.get("user_id"))).append("date", payload.get("date")).append("rating",(int)payload.get("rating"));
+            recipesCollection.updateOne(new Document("_id", new ObjectId((String) payload.get("recipe_id"))), new Document("$push", new Document("ratings", rating)));
+        }
+        Field f1  = new Field<>("avg_rating", new Document("$avg","$ratings.rating"));
+        Document query_response = recipesCollection.aggregate(
+                Arrays.asList(
+                    Aggregates.addFields(f1),
+                    Aggregates.project(new Document("avg_rating", 1))
+                )
+        ).first();
+        response.put("new_avg_rating",query_response.get("avg_rating"));
+        return response;
     }
 }

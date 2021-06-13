@@ -57,7 +57,7 @@ public class UtilsSQL {
 
     public static List<Document> getRecipeComments(Object recipe_id, HashMap mapping_user_id) {
         List<Document> comments = new ArrayList<Document>();
-        String query = "select * from user_recipe_comment where recipe_id=" + recipe_id;
+        String query = "select * from user_recipe_comment where recipe_id=" + recipe_id + " order by date";
         ResultSet resultSet = DatabaseSession.executeQuery(query);
         try{
             if(resultSet == null || !resultSet.next()) return comments;
@@ -209,11 +209,11 @@ public class UtilsSQL {
             if(resultSet == null || !resultSet.next()) return instructions;
             do {
                 Integer step_number = resultSet.getInt("step_number");
-                String content = resultSet.getString("amount");
+                String content = resultSet.getString("content");
                 ObjectId id = new ObjectId();
                 Document document = new Document("_id", id)
                         .append("step_number", step_number)
-                        .append("amount", content);
+                        .append("content", content);
                 instructions.add(document);
             }while (resultSet.next());
         } catch (SQLException e) {

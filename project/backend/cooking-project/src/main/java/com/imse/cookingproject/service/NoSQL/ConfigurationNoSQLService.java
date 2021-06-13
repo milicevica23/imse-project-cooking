@@ -27,16 +27,10 @@ public class ConfigurationNoSQLService {
         MongoClient mongoClient = MongoClients.create(connectionString);
         MongoDatabase database = mongoClient.getDatabase("cookingproject");
         CreateCollectionOptions createCollectionOptionsUsers = new CreateCollectionOptions();
-        //ValidationOptions collOptionsUsers = Utils.createValidatorForUsers();
-        //createCollectionOptionsUsers.validationOptions(collOptionsUsers);
         database.createCollection("users",createCollectionOptionsUsers);
-
         CreateCollectionOptions createCollectionOptionsRecipe = new CreateCollectionOptions();
-        //ValidationOptions collOptionsRecipe = Utils.createValidatorForRecipe();
-        //createCollectionOptionsRecipe.validationOptions(collOptionsRecipe);
         database.createCollection("recipes",createCollectionOptionsRecipe);
     }
-
 
     public void migrateData() {
         String connectionString = "mongodb://admin:admin@" + mongoHost;

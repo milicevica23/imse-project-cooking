@@ -38,4 +38,9 @@ public class RecipeController {
     public HashMap<String,Object> addComment(@RequestBody HashMap<String,Object> payload,@RequestParam String dbType){
         return recipeService.addComment(payload,dbType);
     }
+
+    @PostMapping("addRating")
+    public HashMap<String,Object> addRating(@RequestBody HashMap<String,Object> payload,@RequestParam String dbType){
+        return recipeService.addRating(payload,dbType);
+    }
 }

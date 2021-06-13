@@ -9,11 +9,11 @@ import java.util.HashMap;
 public class CookingSiteProperties {
     private static final Integer userAmount = 20;
     private static final Integer recipeAmount = 30;
-    private static final Integer ratingAmount = 5;
-    private static final Integer commentAmount = 5;
-    private static final Integer photoAmount = 10;
-    private static final Integer instructionAmount = 5;
-    private static final Integer ingredientAmount = 150;
+    private static final Integer ratingAmount = 30;
+    private static final Integer commentAmount = 20;
+    private static final Integer photoAmount = 2;
+    private static final Integer instructionAmount = 2;
+    private static final Integer ingredientAmount = 5;
 
     public static Integer getUserAmount() {
         return userAmount;

@@ -1,6 +1,5 @@
 package com.imse.cookingproject.service.NoSQL;
 
-import com.imse.cookingproject.model.Filter;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;

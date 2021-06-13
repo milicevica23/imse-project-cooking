@@ -1,14 +1,51 @@
 db.recipes.aggregate([
-    {$match: {"recipe_name": "Pudding"}},
     {
-         $lookup:
+      $match: {"recipe_name": {"$ne" : ""}}
+    },
+    { 
+      $lookup:
            {
              from: "users",
-             localField: "user_id",
-             foreignField: "_id",
-             as: "user"
+             let : { user_id_1 : "$user_id"},
+             pipeline:
+              [
+                { 
+                 $match:
+                    {
+                      $expr: {
+                          $eq : ["$_id", "$$user_id_1"]
+                      }
+                    }
+                },
+                {
+                  $project : {"username":1, _id:0}
+                }
+              ],
+             as: "user_name"
            }
-      },
-    { $addFields: { "avg_rating": {$avg: "$ratings.rating"}, user_name: { "$arrayElemAt" : ["$user",0]} }},
-    { $project : { _id: 1, date : 1 , "cover_photo.link" :1, avg_rating:1, user_name:1, user_name: "$user_name.username" } }
+    },
+    {
+      "$unwind": "$user_name"
+    },
+    { 
+      $addFields: { 
+        "avg_rating": {$avg: "$ratings.rating"}
+      }
+    },
+    {
+      $project : {
+        user_name: "$user_name.username",
+        user_id: 1,
+        recipe_name:1,
+        date:1,
+        preparation_time:1,
+        cooking_time:1,
+        avg_rating:1,
+        "cover_photo.link" :1,
+        course:1,
+        cousine:1
+      }
+    }
 ]).pretty()
+
+

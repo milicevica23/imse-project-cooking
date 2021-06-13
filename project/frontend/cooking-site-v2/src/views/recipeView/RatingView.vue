@@ -42,14 +42,14 @@ export default {
     },
      methods: {
         search(){
-            fetch(this.$root.baseUrl + "/recipe/getRecipes?recipeName=" +this.searchedRecipe + "&dbType=" + this.$root.dbType )
+            fetch(this.$root.baseUrl + "/recipe/getRecipes?recipeName=" +this.searchedRecipe + "&dbType=" + this.$root.dbType +"&filterOrder=desc")
             .then(res => res.json())
             .then(data => this.recipes = data)
             .catch(e => console.log(e))
         }
     },
     mounted(){
-        fetch(this.$root.baseUrl + "/recipe/getRecipes?recipeName=" +this.searchedRecipe + "&dbType=" + this.$root.dbType )
+        fetch(this.$root.baseUrl + "/recipe/getRecipes?recipeName=" +this.searchedRecipe + "&dbType=" + this.$root.dbType + "&filterOrder=desc")
             .then(res => res.json())
             .then(data => this.recipes = data)
             .catch(e => console.log(e))

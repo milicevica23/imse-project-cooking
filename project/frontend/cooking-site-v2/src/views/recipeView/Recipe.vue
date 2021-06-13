@@ -11,9 +11,11 @@
                 background-color="purple lighten-3"
                 color="purple"
             ></v-rating>
+            <v-btn @click="addRating"> send rating</v-btn>
+            <p v-if="rating_message !==''"> {{rating_message}}</p>
         </v-col>
         <v-col cols=6 class="mr-4" v-if="context === 'listRecipe'" align="right" justify="center">
-            Rating: {{recipe.avg_rating}}
+            Rating: {{recipe.avg_rating.toFixed(1)}}
         </v-col>
     </v-row>
     <v-row v-if="context === 'creating'">
@@ -111,7 +113,8 @@ export default {
     props: ['recipe', 'context'],
     data: () => ({
         new_comment:"",
-        photoHeight: 400  
+        photoHeight: 400,
+        rating_message : "hello"
     }),
     methods:{
         submitComment(){
@@ -134,14 +137,10 @@ export default {
 
           fetch(this.$root.baseUrl + "/recipe/addComment/?dbType=" + this.$root.dbType,
           {
-              method: "POST",
               headers: {
-                'Content-Type': 'application/json',
-                "Access-Control-Allow-Headers" : "Content-Type",
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
-        
+              'Content-Type': 'application/json',
               },
+              method: "POST",
               body: JSON.stringify(payload)
           })
           .then((res) => { return res.json(); })
@@ -157,6 +156,38 @@ export default {
         openSelectedRecipe(){
             console.log("recipe: " + this.recipe._id)
             this.$router.push({name: 'Select', params: { recipe_id: this.recipe._id}})
+        },
+        addRating(){
+            var current = new Date();
+                            
+            var payload = {
+                recipe_id: this.recipe._id,
+                user_id: this.$root.currentUser.id,
+                date: current.toISOString().split('T')[0],
+                rating: this.recipe.avg_rating
+            };
+        
+            var self = this;
+
+            fetch(this.$root.baseUrl + "/recipe/addRating/?dbType=" + this.$root.dbType,
+            {
+                headers: {
+                 'Content-Type': 'application/json',
+                },
+                method: "POST",
+                body: JSON.stringify(payload)
+            })
+            .then((res) => { return res.json(); })
+            .then((data) => { 
+                    if(data.status === "ok"){
+                        this.recipe.avg_rating = data.new_avg_rating
+                    }else{
+                        this.rating_message = data.status
+                        this.recipe.avg_rating = data.new_avg_rating
+                    }
+
+                    console.log(data.status)
+            }) 
         }
     },
     mounted(){
