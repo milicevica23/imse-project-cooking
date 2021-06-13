@@ -29,9 +29,9 @@ public class RecipeController {
     }
 
     @GetMapping("getRecipes")
-    public List<Document> getRecipes(@RequestParam(defaultValue = "") String recipeName, @RequestParam(defaultValue = "") String filterOrder, @RequestParam String dbType){
-        log.info("recipeName: " + recipeName + " " + "dbtype: " + dbType + " " + "filterOrder: " + filterOrder);
-        return recipeService.getRecipes(recipeName,filterOrder,dbType);
+    public List<Document> getRecipes(@RequestParam(defaultValue = "") String recipeName, @RequestParam(defaultValue = "") String filterOrder, @RequestParam String dbType, @RequestParam(defaultValue = "10") Integer limit){
+        log.info("recipeName: " + recipeName + " " + "dbtype: " + dbType + " " + "filterOrder: " + filterOrder + "limit: " + limit);
+        return recipeService.getRecipes(recipeName,filterOrder,dbType,limit);
     }
 
     @PostMapping("addComment")

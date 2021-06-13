@@ -61,8 +61,9 @@ public class RecipeNoSQLService {
         List<HashMap<String,Object>> instructions = (List<HashMap<String, Object>>) payload.get("instructions");
 
         for(var instruction : instructions) {
-            insert_instructions.add(new Document("_id", new ObjectId()).append("step_number", instruction.get("step_number")).append("content",instruction.get("content")));
+            insert_instructions.add(new Document("_id", new ObjectId()).append("step_num", instruction.get("step_num")).append("content",instruction.get("content")));
         }
+        log.info(insert_instructions.toString());
         recipe.append("instructions", insert_instructions);
         recipe.append("comments", new ArrayList<>());
 
@@ -79,48 +80,38 @@ public class RecipeNoSQLService {
         MongoDatabase database = mongoClient.getDatabase("cookingproject");
         MongoCollection<Document> recipesCollection = database.getCollection("recipes");
         Field f1  = new Field<>("avg_rating", new Document("$avg","$ratings.rating"));
-        Field f2  = new Field<>("user_name", new Document("$arrayElemAt", Arrays.asList("$user",0)));
+        Field f2  = new Field<>("user_name", "$user_name.username");
 
         Document document = recipesCollection.aggregate(
                 Arrays.asList(
-                        Aggregates.match(Filters.eq("_id", new ObjectId(recipeId))),
-                        Aggregates.lookup("users", "user_id","_id","user"),
-                        Aggregates.lookup("users", "comments.user_id","_id","comment_user"),
-                        Aggregates.addFields(f1), Aggregates.addFields(f2)
-                        ,Aggregates.project(new Document("user_name","$user_name.username")
-                                .append("_id",1)
-                                .append("user_id",1)
-                                .append("recipe_name",1)
-                                .append("date",1)
-                                .append("preparation_time",1)
-                                .append("avg_rating",1)
-                                .append("cooking_time",1)
-                                .append("course",1)
-                                .append("cuisine",1)
-                                .append("cover_photo",1)
-                                .append("photos",1)
-                                .append("ingredient",1)
-                                .append("comments", new Document("$map", new Document("input", "$comments")
-                                                                                    .append("as", "comment")
-                                                                                    .append("in", new Document(
-                                                                                            "user",  new Document("$arrayElemAt" , Arrays.asList(new Document("$filter", new Document(
-                                                                                                                                    "input", "$comment_user")
-                                                                                                                                    .append("as","current_user")
-                                                                                                                                    .append("cond", new Document(
-                                                                                                                                            "$eq",Arrays.asList("$$current_user._id", "$$comment.user_id")
-                                                                                                                                                                )
-                                                                                                                                            )
-                                                                                                                                        )
-                                                                                                                                        ,0)
-                                                                                                                )
-                                                                                            ).append("date", "$$comment.date")
-                                                                                            .append("content", "$$comment.content")
-                                                                                            .append("_id", "$$comment._id")
-                                                                                        )
-                                                                )
-                                )
+                        Aggregates.match(new Document("_id", new Document("$eq", new ObjectId(recipeId)))),
+                        new Document("$lookup", new Document("from", "users").append("let", new Document("user_id_temp","$user_id")).append("pipeline", Arrays.asList(
+                                Aggregates.match(new Document("$expr", new Document("$eq", Arrays.asList("$_id", "$$user_id_temp")))),
+                                Aggregates.project(new Document("username",1).append("_id", 0))
+                        )).append("as", "user_name")
+                        ),
+                        Aggregates.unwind("$user_name"),
+                        Aggregates.addFields(Arrays.asList(f1,f2)),
+                        new Document("$lookup", new Document("from", "users")
+                                                .append("let", new Document("comments", "$comments"))
+                                                .append("pipeline", Arrays.asList(
+                                                    Aggregates.match(new Document("$expr", new Document("$in", Arrays.asList("$_id","$$comments.user_id")))),
+                                                       Aggregates.addFields(new Field<>("user_comments", new Document("$filter", new Document("input","$$comments")
+                                                                                                                                                .append("as","comment")
+                                                                                                                                                .append("cond", new Document(
+                                                                                                                                                        "$eq", Arrays.asList("$$comment.user_id", "$_id")
+                                                                                                                                                ))
 
+                                                       ))),
+                                                        Aggregates.unwind("$user_comments"),
+                                                        Aggregates.project(new Document("username",1)
+                                                                                .append("content", "$user_comments.content")
+                                                                                .append("date","$user_comments.date")
+                                                        )
+                                                ))
+                                                .append("as", "comments")
                         )
+
                 )
         ).first();
 
@@ -137,22 +128,25 @@ public class RecipeNoSQLService {
             ingredient.append("_id",ingredient.get("_id").toString());
         }
 
+        for(Document ingredient: (ArrayList<Document>)document.get("instructions")){
+            ingredient.append("_id",ingredient.get("_id").toString());
+        }
+
         for(Document comment: (ArrayList<Document>)document.get("comments")){
             comment.append("_id",comment.get("_id").toString());
-            comment.append("username", ((Document)comment.get("user")).get("username"));
-            comment.remove("user");
         }
         return document;
     }
 
-    public List<Document> getRecipes(String recipeName, String filterOrder) {
+    public List<Document> getRecipes(String recipeName, String filterOrder, Integer limit) {
         String connectionString = "mongodb://admin:admin@" + mongoHost;
         MongoClient mongoClient = MongoClients.create(connectionString);
         MongoDatabase database = mongoClient.getDatabase("cookingproject");
         MongoCollection<Document> recipesCollection = database.getCollection("recipes");
 
         Field f1  = new Field<>("avg_rating", new Document("$avg","$ratings.rating"));
-        Field f2  = new Field<>("user_name", new Document("$arrayElemAt", Arrays.asList("$user",0)));
+
+
         Bson filter;
         if(recipeName.equals("")){
             filter  = Filters.ne("recipe_name", recipeName);
@@ -163,9 +157,29 @@ public class RecipeNoSQLService {
         AggregateIterable<Document> result = recipesCollection.aggregate(
                 Arrays.asList(
                         Aggregates.match(filter),
-                        Aggregates
+                        Aggregates.addFields(f1),
+                        Aggregates.sort(new Document("avg_rating",-1)),
+                        Aggregates.limit(limit),
+                        new Document("$lookup", new Document("from", "users").append("let", new Document("user_id_temp","$user_id")).append("pipeline", Arrays.asList(
+                                Aggregates.match(new Document("$expr", new Document("$eq", Arrays.asList("$_id", "$$user_id_temp")))),
+                                Aggregates.project(new Document("username",1).append("_id", 0))
+                                )).append("as", "user_name")
+                        ),
+                        Aggregates.unwind("$user_name"),
+                        Aggregates.project(new Document("user_name", "$user_name.username")
+                                                .append("user_id",1)
+                                                .append("recipe_name",1)
+                                                .append("date",1)
+                                                .append("preparation_time",1)
+                                                .append("cooking_time",1)
+                                                .append("avg_rating",1)
+                                                .append("cover_photo.link" ,1)
+                                                .append("course",1)
+                                                .append("cuisine",1)
+                                                .append("user_id",1)
                         )
-                ));
+                    )
+                );
         ArrayList<Document> response = new ArrayList<>();
         for(Document doc : result){
             doc.append("_id", doc.get("_id").toString());

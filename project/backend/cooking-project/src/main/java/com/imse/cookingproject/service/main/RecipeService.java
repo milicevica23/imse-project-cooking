@@ -37,11 +37,11 @@ public class RecipeService {
         }
     }
 
-    public List<Document> getRecipes(String recipeName, String filterOrder, String dbType) {
+    public List<Document> getRecipes(String recipeName, String filterOrder, String dbType, Integer limit) {
         if(dbType.equals("SQL")) {
-            return recipeSQLService.getRecipes(recipeName,filterOrder);
+            return recipeSQLService.getRecipes(recipeName,filterOrder,limit);
         }else{
-            return recipeNoSQLService.getRecipes(recipeName,filterOrder);
+            return recipeNoSQLService.getRecipes(recipeName,filterOrder, limit);
         }
 
     }

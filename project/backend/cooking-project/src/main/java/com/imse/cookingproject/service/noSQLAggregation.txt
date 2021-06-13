@@ -1,3 +1,5 @@
+###get recipes###
+
 db.recipes.aggregate([
     {
       $match: {"recipe_name": {"$ne" : ""}}
@@ -6,14 +8,14 @@ db.recipes.aggregate([
       $lookup:
            {
              from: "users",
-             let : { user_id_1 : "$user_id"},
+             let : { user_id_tmp : "$user_id"},
              pipeline:
               [
                 { 
                  $match:
                     {
                       $expr: {
-                          $eq : ["$_id", "$$user_id_1"]
+                          $eq : ["$_id", "$$user_id_tmp"]
                       }
                     }
                 },
@@ -32,6 +34,7 @@ db.recipes.aggregate([
         "avg_rating": {$avg: "$ratings.rating"}
       }
     },
+    { $sort : { avg_rating : -1 } }
     {
       $project : {
         user_name: "$user_name.username",
@@ -46,6 +49,92 @@ db.recipes.aggregate([
         cousine:1
       }
     }
+]).pretty()
+
+###get one recipe###
+
+db.recipes.aggregate([
+  {
+      $match: {"_id": {"$eq" :  ObjectId("60c60edbf7f39404b31d1197")}}
+  },
+  { 
+    $lookup:
+          {
+            from: "users",
+            let : { user_id_tmp : "$user_id"},
+            pipeline:
+            [
+              { 
+                $match:
+                  {
+                    $expr: {
+                        $eq : ["$_id", "$$user_id_tmp"]
+                    }
+                  }
+              },
+              {
+                $project : {"username":1, _id:0}
+              }
+            ],
+            as: "user_name"
+          }
+  },
+  {
+    "$unwind": "$user_name"
+  },
+  { 
+    $addFields: { 
+      "avg_rating": {$avg: "$ratings.rating"},
+      "user_name": "$user_name.username"
+    }
+  },
+  {
+    "$lookup": {
+      "from": "users",
+      "let": {
+        comments: "$comments"
+      },
+      "pipeline": [
+        {
+          $match: {
+            $expr: {
+              $in: [
+                "$_id",
+                "$$comments.user_id"
+              ]
+            }
+          }
+        },
+        {
+          $addFields: {
+            user_comments: {
+              $filter: {
+                input: "$$comments",
+                as: "comment",
+                cond: {
+                  $eq: [
+                    "$$comment.user_id",
+                    "$_id"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          $unwind: "$user_comments"
+        },
+        {
+          $project: {
+            "username" : 1,
+            "content" : "$user_comments.content",
+            "date" : "$user_comments.date"
+          }
+        }
+      ],
+      "as": "comments"
+    }
+  }
 ]).pretty()
 
 

@@ -147,7 +147,7 @@
         date: '',
         preparation_time: '30',
         cooking_time: '20',
-        course: 'serbien',
+        course: 'breakfast',
         cuisine: 'serbien',
         username: 'aleks',
         avg_rating: 4.5,
@@ -177,15 +177,7 @@
             },
             {
                 step_num: 2,
-                content: "prepare canim"
-            },
-            {
-                step_num: 3,
                 content: "Du bist eine legende"
-            },
-            {
-                step_num: 4,
-                content: "cok seviyorum"
             }
         ]
     }

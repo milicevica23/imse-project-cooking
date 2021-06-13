@@ -33,7 +33,7 @@ public class ConfigurationService {
     }
 
     public void migrateData() {
-        //configurationNoSQLService.createSchema();
+        configurationNoSQLService.createSchema();
         configurationNoSQLService.migrateData();
     }
 

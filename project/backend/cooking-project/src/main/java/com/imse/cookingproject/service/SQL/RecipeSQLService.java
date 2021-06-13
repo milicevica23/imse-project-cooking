@@ -235,7 +235,7 @@ public class RecipeSQLService {
         return "no user";
     }
 
-    public List<Document> getRecipes(String recipeName, String filterOrder) {
+    public List<Document> getRecipes(String recipeName, String filterOrder, Integer limit) {
         String query = "select * from (select temp.recipe_id, coalesce(avg(temp.rating),0) average_r from\n" +
                         "(select recipe.recipe_id, user_recipe_rating.rating, recipe.date from recipe left join user_recipe_rating on recipe.recipe_id = user_recipe_rating.recipe_id) temp\n" +
                         "group by temp.recipe_id) average_table left join (SELECT rec.recipe_id, rec.preparation_time, rec.recipe_name, rec.course, rec.cuisine, rec.preparation_time,rec.cooking_time, " +
@@ -243,7 +243,7 @@ public class RecipeSQLService {
                         "left join (select recipe_id, description, link from photo where description = 'Cover Photo')\n" +
                         "ph on rec.recipe_id = ph.recipe_id) recipe_info on average_table.recipe_id = recipe_info.recipe_id\n" +
                         "where recipe_name like '" + recipeName + "%'\n" +
-                        "order by average_r " + filterOrder +" LIMIT " +  10;
+                        "order by average_r " + filterOrder +" LIMIT " +  limit;
         ResultSet resultSet = DatabaseSession.executeQuery(query);
         ArrayList<Document> response = new ArrayList<>();
         try{
