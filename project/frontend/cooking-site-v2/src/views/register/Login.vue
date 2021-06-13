@@ -66,6 +66,7 @@
                 self.$root.currentUser.id = data._id;
                 self.$root.currentUser.userName = data.username;
                 this.message = "Loged as " + data.username
+                this.$router.push('RatingView') 
               }else{
                 this.message = "No user found"
               }

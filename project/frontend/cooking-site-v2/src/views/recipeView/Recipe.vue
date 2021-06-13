@@ -20,7 +20,7 @@
 
     <v-col cols=6 v-if="context === 'oneRecipe'" align="center" justify="center">
         <v-rating
-            v-model="recipe.avg_rating"
+            v-model="rating_score"
             background-color="yellow lighten-3"
             color="yellow"
         ></v-rating>
@@ -131,7 +131,8 @@ export default {
     data: () => ({
         new_comment:"",
         photoHeight: 400,
-        rating_message : ""
+        rating_message : "",
+        rating_score : 0
     }),
     methods:{
         submitComment(){
@@ -186,7 +187,7 @@ export default {
                 recipe_id: this.recipe._id,
                 user_id: this.$root.currentUser.id,
                 date: current.toISOString().split('T')[0],
-                rating: this.recipe.avg_rating
+                rating: this.rating_score
             };
         
             var self = this;
@@ -203,6 +204,7 @@ export default {
             .then((data) => { 
                     if(data.status === "ok"){
                         this.recipe.avg_rating = data.new_avg_rating
+                        this.rating_message = "you rated recipe with " + this.rating_score
                     }else{
                         this.rating_message = data.status
                         this.recipe.avg_rating = data.new_avg_rating
@@ -215,6 +217,9 @@ export default {
     mounted(){
         if(this.context==="listRecipe"){
             this.photoHeight=200
+        }
+        if(this.context === "oneRecipe"){
+            this.rating_score = this.recipe.avg_rating
         }
     }
 

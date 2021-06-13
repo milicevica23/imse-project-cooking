@@ -4,7 +4,6 @@ import com.imse.cookingproject.CookingSiteProperties;
 import com.imse.cookingproject.service.NoSQL.ConfigurationNoSQLService;
 import com.imse.cookingproject.service.SQL.ConfigurationSQLService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -23,8 +22,13 @@ public class ConfigurationService {
         configurationSQLService.createAllTables();
     }
 
-    public void drop() {
-        configurationSQLService.dropAllTables();
+    public void drop(String dbType) {
+        if(dbType.equals("SQL")) {
+            configurationSQLService.dropAllTables();
+        }else{
+            configurationNoSQLService.createSchema();
+        }
+
     }
 
 

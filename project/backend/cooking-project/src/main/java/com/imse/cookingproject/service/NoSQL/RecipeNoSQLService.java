@@ -80,7 +80,8 @@ public class RecipeNoSQLService {
         MongoDatabase database = mongoClient.getDatabase("cookingproject");
         MongoCollection<Document> recipesCollection = database.getCollection("recipes");
         Field f1  = new Field<>("avg_rating", new Document("$avg","$ratings.rating"));
-        Field f2  = new Field<>("user_name", "$user_name.username");
+        Field f2  = new Field<>("username", "$user_name.username");
+        Field f3  = new Field<>("avg_rating", new Document("$ifNull", Arrays.asList("$avg_rating",0)));
 
         Document document = recipesCollection.aggregate(
                 Arrays.asList(
@@ -92,6 +93,7 @@ public class RecipeNoSQLService {
                         ),
                         Aggregates.unwind("$user_name"),
                         Aggregates.addFields(Arrays.asList(f1,f2)),
+                        Aggregates.addFields(f3),
                         new Document("$lookup", new Document("from", "users")
                                                 .append("let", new Document("comments", "$comments"))
                                                 .append("pipeline", Arrays.asList(
@@ -110,8 +112,8 @@ public class RecipeNoSQLService {
                                                         )
                                                 ))
                                                 .append("as", "comments")
-                        )
-
+                        ),
+                        Aggregates.project(new Document("ratings", 0))
                 )
         ).first();
 
@@ -147,6 +149,7 @@ public class RecipeNoSQLService {
         Field f1  = new Field<>("avg_rating", new Document("$avg","$ratings.rating"));
 
 
+
         Bson filter;
         if(recipeName.equals("")){
             filter  = Filters.ne("recipe_name", recipeName);
@@ -166,13 +169,13 @@ public class RecipeNoSQLService {
                                 )).append("as", "user_name")
                         ),
                         Aggregates.unwind("$user_name"),
-                        Aggregates.project(new Document("user_name", "$user_name.username")
+                        Aggregates.project(new Document("username", "$user_name.username")
                                                 .append("user_id",1)
                                                 .append("recipe_name",1)
                                                 .append("date",1)
                                                 .append("preparation_time",1)
                                                 .append("cooking_time",1)
-                                                .append("avg_rating",1)
+                                                .append("avg_rating", new Document("$ifNull", Arrays.asList("$avg_rating",0)))
                                                 .append("cover_photo.link" ,1)
                                                 .append("course",1)
                                                 .append("cuisine",1)
@@ -219,9 +222,11 @@ public class RecipeNoSQLService {
             recipesCollection.updateOne(new Document("_id", new ObjectId((String) payload.get("recipe_id"))), new Document("$push", new Document("ratings", rating)));
         }
         Field f1  = new Field<>("avg_rating", new Document("$avg","$ratings.rating"));
+        Field f2  = new Field<>("avg_rating", new Document("$ifNull", Arrays.asList("$avg_rating",0)));
         Document query_response = recipesCollection.aggregate(
                 Arrays.asList(
                     Aggregates.addFields(f1),
+                    Aggregates.addFields(f2),
                     Aggregates.project(new Document("avg_rating", 1))
                 )
         ).first();

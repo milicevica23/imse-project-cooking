@@ -8,6 +8,9 @@
               <v-btn @click="createDB"> 
                 create SQL and generate Data 
               </v-btn>
+              <v-btn class="ml-2" @click="dropSQL"> 
+                drop SQL data
+              </v-btn>
            </v-row>
             <v-row v-for="(key,value) in configs" :key="value">
                {{value}}: {{key}}
@@ -18,6 +21,9 @@
            <v-row>
               <v-btn @click="migrateDB"> 
               migrate Data from SQL to NoSQL
+              </v-btn>
+              <v-btn class="ml-2" @click="dropNoSql"> 
+                drop NoSQL data 
               </v-btn>
            </v-row>
            
@@ -47,6 +53,18 @@
       migrateDB() {
         fetch(this.$root.baseUrl + "/configuration/migrateData")
         .catch(e => console.log(e))
+      },
+      dropSQL() {
+        fetch(this.$root.baseUrl + "/configuration/dropData?dbType=SQL")
+        .catch(e => console.log(e))
+        this.$root.currentUser.id = -1
+        this.$root.currentUser.userName = "Guest"
+      },
+      dropNoSql() {
+        fetch(this.$root.baseUrl + "/configuration/dropData?dbType=NoSQL")
+        .catch(e => console.log(e))
+        this.$root.currentUser.id = -1
+        this.$root.currentUser.userName = "Guest"
       }
     },
     mounted(){

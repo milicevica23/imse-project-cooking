@@ -13,7 +13,7 @@ new Vue({
     currentUser: {"id" : "-1",
                   "userName" : "Guest"
                },
-    baseUrl: "http://localhost:8080",
+    baseUrl: "http://localhost:8082",
     dbType : "SQL"
   },
   router,

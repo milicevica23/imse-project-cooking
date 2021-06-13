@@ -10,7 +10,7 @@
 
     <v-spacer></v-spacer>
 
-        <v-switch
+        <v-switch class = "mr-3"
             v-model="switchDB"
             :label= dbType
             @click="changeDB"

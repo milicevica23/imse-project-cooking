@@ -1,7 +1,6 @@
 package com.imse.cookingproject.controller.configuration;
 
 import com.imse.cookingproject.service.main.ConfigurationService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +13,7 @@ import java.util.HashMap;
 @RestController
 @RequestMapping("configuration")
 public class ConfigurationController {
-    private boolean createDone = false;
+
 
 
     @Autowired
@@ -22,16 +21,13 @@ public class ConfigurationController {
 
     @GetMapping("/createDB")
     public void createDB() {
-        if(!createDone){
-            configurationService.create();
-            configurationService.generateData();
-            createDone = true;
-        }
+        configurationService.create();
+        configurationService.generateData();
     }
 
     @GetMapping("/dropTables")
     public void dropDB() {
-         configurationService.drop();
+         configurationService.drop("SQL");
     }
 
     @GetMapping("/getConfiguration")
@@ -47,6 +43,11 @@ public class ConfigurationController {
     @GetMapping("/migrateData")
     public void migrateData() {
         configurationService.migrateData();
+    }
+
+    @GetMapping("dropData")
+    public void addRating(@RequestParam String dbType){
+        configurationService.drop(dbType);
     }
 
 }

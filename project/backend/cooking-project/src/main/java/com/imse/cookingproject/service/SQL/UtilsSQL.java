@@ -81,7 +81,7 @@ public class UtilsSQL {
 
     public static List<Document> getRecipeIngredient(Object recipe_id) {
         List<Document> ingredients = new ArrayList<Document>();
-        String query = "select * from (select * from recipe_ingredient where recipe_id="+ recipe_id +") as r_i left join ingredient on r_i.recipe_id=ingredient.ingredient_id";
+        String query = "select * from (select * from recipe_ingredient where recipe_id="+ recipe_id +") as r_i left join ingredient on r_i.ingredient_id=ingredient.ingredient_id";
         ResultSet resultSet = DatabaseSession.executeQuery(query);
         try{
             if(resultSet == null || !resultSet.next()) return ingredients;
@@ -212,7 +212,7 @@ public class UtilsSQL {
                 String content = resultSet.getString("content");
                 ObjectId id = new ObjectId();
                 Document document = new Document("_id", id)
-                        .append("step_number", step_number)
+                        .append("step_num", step_number)
                         .append("content", content);
                 instructions.add(document);
             }while (resultSet.next());
