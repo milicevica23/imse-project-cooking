@@ -2,95 +2,112 @@
 <v-container>
   <v-card>
     <v-row align="center" justify="center">
-        <v-col class="ml-4" cols=2>{{recipe.date}}</v-col>
-        <v-col class="ml-1" cols=2>{{recipe.username}}</v-col>
-        <v-spacer></v-spacer>
-        <v-col cols=6 v-if="context === 'oneRecipe'" align="center" justify="center">
-            <v-rating
-                v-model="recipe.avg_rating"
-                background-color="purple lighten-3"
-                color="purple"
-            ></v-rating>
-            <v-btn @click="addRating"> send rating</v-btn>
-            <p v-if="rating_message !==''"> {{rating_message}}</p>
-        </v-col>
-        <v-col cols=6 class="mr-4" v-if="context === 'listRecipe'" align="right" justify="center">
-            Rating: {{recipe.avg_rating.toFixed(1)}}
-        </v-col>
+
+    <v-list-item two-line>
+      <v-list-item-content>
+        <v-list-item-title class="text-h5" align="right" justify="right">
+          {{recipe.username}}
+        </v-list-item-title>
+        <v-list-item-subtitle align="right" justify="right">{{recipe.date}}</v-list-item-subtitle>
+         <v-list-item-title >
+            <span> Rating: {{recipe.avg_rating.toFixed(1)}} </span>
+            <v-icon left class="rating-star" style="color:orange">grade</v-icon>
+        </v-list-item-title>
+
+            
+      </v-list-item-content>
+    </v-list-item>
+
+    <v-col cols=6 v-if="context === 'oneRecipe'" align="center" justify="center">
+        <v-rating
+            v-model="recipe.avg_rating"
+            background-color="yellow lighten-3"
+            color="yellow"
+        ></v-rating>
+        <v-btn @click="addRating"> send rating</v-btn>
+        <p v-if="rating_message !==''"> {{rating_message}}</p>
+    </v-col>
+    
     </v-row>
     <v-row v-if="context === 'creating'">
         <v-col>
             <v-card-title class="justify-center">{{recipe.recipe_name}}</v-card-title>
         </v-col>
     </v-row>
+
     <v-row>
         <v-col>
-            <v-img
-                contain
-                :height=photoHeight
-                :src="recipe.cover_photo.link"
-            ></v-img>
+            <v-img class="white--text align-end" height="300px" :src="recipe.cover_photo.link">
+            </v-img>
+            <!--v-img contain :height=photoHeight :src="recipe.cover_photo.link"></v-img-->
         </v-col>
     </v-row>
+
     <v-row v-if="context === 'listRecipe'">
         <v-col>
-            <v-card-title class="justify-center">{{recipe.recipe_name}}</v-card-title>
+            <v-card-title primary-title class="justify-center">
+                <div>
+                    <h3 class="headline grey--text text--accent-2 font-weight-bold"> {{recipe.recipe_name}} </h3>
+                </div>
+            </v-card-title>
         </v-col>
     </v-row>
-    <v-row>
-        <v-col align="center" justify="center">
-            {{recipe.preparation_time}}
-        </v-col>
-        <v-col align="center" justify="center">
-             {{recipe.cooking_time}}
-        </v-col>
-        <v-col align="center" justify="center">
-             {{recipe.course}}
-        </v-col>
-        <v-col align="center" justify="center">
-             {{recipe.cuisine}}
-        </v-col>
-    </v-row >
-    <v-row justify="center"
-            align="center">
-        <v-col class="ml-5">
-            <v-chip-group
-            active-class="deep-purple accent-4 white--text"
-            column
-        >
-            <v-chip v-for="(item, index) in recipe.ingredient" :key="index" >
-                {{item.ingredient_name}}: {{item.amount}}
-            </v-chip>
+
+    <v-card-text class="text--primary"  align="center" justify="center">
+        <div>Preparation Time: {{recipe.preparation_time}}</div>
+
+        <div>Cooking Time: {{recipe.cooking_time}} </div>
+
+        <div>Course: {{recipe.course}} </div>
+
+        <div>Cuisine: {{recipe.cuisine}} </div>
+    </v-card-text>
+    
+    <v-row justify="center" align="center">
+        
+            <v-chip-group active-class="deep-purple accent-4 white--text"  align="center" justify="center">
+                <v-chip v-for="(item, index) in recipe.ingredient" :key="index" >
+                    {{item.ingredient_name}}: {{item.amount}}
+                </v-chip>
             </v-chip-group>
-        </v-col>
+      
     </v-row>
         
-
     <v-row v-for="(step,index) in recipe.instructions" :key="index" >
-        <v-col class="pl-16" align="center" justify="center" >
-            {{step.step_num}}: {{step.content}}
+        <v-col class="pl-16"  justify="center" >
+            <span class=" orange--text text--accent-2 font-weight-bold">Step {{step.step_num}}: </span>
+            <span>{{step.content}} </span>
         </v-col>
     </v-row>
     <v-row v-if="context === 'listRecipe'">
         <v-col align="center" justify="center">
-            <v-btn class="blue white--text ma-3" @click="openSelectedRecipe">
+            <v-btn class="blue white--text ma-3 lighten-2" @click="openSelectedRecipe">
                 View Recipe
             </v-btn>
         </v-col>
     </v-row>
   </v-card>
-  <v-card v-for="(comment,index) in recipe.comments" :key="index" >
+
+    <v-col></v-col>
+    <v-col></v-col>
+
+  <v-card v-for="(comment,index) in recipe.comments" :key="index" color="grey lighten-1">
       <v-row class="ma-4">
-          <v-col>
-            {{comment.date}} : {{comment.username}} : {{comment.content}}  
-          </v-col>
+       <v-list-item two-line>
+            <v-list-item-content>
+                <v-list-item-subtitle class="purple--text"> {{comment.username}} </v-list-item-subtitle>
+                <v-list-item-title >{{comment.date}}:  {{comment.content}}</v-list-item-title> 
+            </v-list-item-content>
+        </v-list-item>
       </v-row>
   </v-card>
+
   <v-form v-if="context === 'oneRecipe'">
           <v-container>
             <v-text-field
                 v-model="new_comment"
-                label="comment"
+                
+                placeholder="Leave a comment..."
                 required
                 :rules="[v => !!v || 'field is required']"
             ></v-text-field>
@@ -114,7 +131,7 @@ export default {
     data: () => ({
         new_comment:"",
         photoHeight: 400,
-        rating_message : "hello"
+        rating_message : ""
     }),
     methods:{
         submitComment(){
@@ -155,7 +172,12 @@ export default {
         },
         openSelectedRecipe(){
             console.log("recipe: " + this.recipe._id)
-            this.$router.push({name: 'Select', params: { recipe_id: this.recipe._id}})
+            if(this.$root.currentUser.userName!=="Guest") {
+                this.$router.push({name: 'Select', params: { recipe_id: this.recipe._id}})
+            } else {
+                this.$router.push('Login') 
+            }
+            
         },
         addRating(){
             var current = new Date();

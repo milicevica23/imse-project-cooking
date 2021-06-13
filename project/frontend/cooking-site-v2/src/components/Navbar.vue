@@ -6,8 +6,10 @@
             <span class="font-weight-light"> Cooking</span>
             <span class="font-weight-bold">Page</span>
         </v-toolbar-title>
-        
-        <v-spacer></v-spacer>
+    
+
+    <v-spacer></v-spacer>
+
         <v-switch
             v-model="switchDB"
             :label= dbType
@@ -24,7 +26,7 @@
         </v-btn>
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" app :style="{background: $vuetify.theme.themes.light.primary}">
+    <v-navigation-drawer v-model="drawer" app :style="{background: $vuetify.theme.themes.light.primary}" md="4">
         <v-list>
             <v-list-item v-for="link in links" :key="link.text" router-link :to="link.route">
                 <v-list-item-action>
